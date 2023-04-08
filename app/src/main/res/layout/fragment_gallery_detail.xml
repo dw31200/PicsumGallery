@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GalleryDetailFragment">
+
+    <ImageView
+        android:id="@+id/detail_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_author_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/hello_blank_fragment"
+        app:layout_constraintEnd_toEndOf="@id/detail_imageView"
+        app:layout_constraintStart_toStartOf="@id/detail_imageView"
+        app:layout_constraintTop_toBottomOf="@id/detail_imageView" />
+
+    <TextView
+        android:id="@+id/detail_width_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/hello_blank_fragment"
+        app:layout_constraintEnd_toEndOf="@id/detail_imageView"
+        app:layout_constraintStart_toStartOf="@id/detail_imageView"
+        app:layout_constraintTop_toBottomOf="@id/detail_author_textView" />
+
+    <TextView
+        android:id="@+id/detail_height_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/hello_blank_fragment"
+        app:layout_constraintEnd_toEndOf="@id/detail_imageView"
+        app:layout_constraintStart_toStartOf="@id/detail_imageView"
+        app:layout_constraintTop_toBottomOf="@id/detail_width_textView" />
+
+    <TextView
+        android:id="@+id/detail_webSiteUrl_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/hello_blank_fragment"
+        app:layout_constraintEnd_toEndOf="@id/detail_imageView"
+        app:layout_constraintStart_toStartOf="@id/detail_imageView"
+        app:layout_constraintTop_toBottomOf="@id/detail_height_textView" />
+
+    <TextView
+        android:id="@+id/detail_url_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/hello_blank_fragment"
+        app:layout_constraintEnd_toEndOf="@id/detail_imageView"
+        app:layout_constraintStart_toStartOf="@id/detail_imageView"
+        app:layout_constraintTop_toBottomOf="@id/detail_webSiteUrl_textView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
