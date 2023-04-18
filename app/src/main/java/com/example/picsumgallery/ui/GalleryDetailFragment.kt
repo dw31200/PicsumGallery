@@ -47,8 +47,8 @@ class GalleryDetailFragment : Fragment() {
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(binding.detailImageView)
         binding.detailAuthorTextView.text = arguments?.getString("image_author")
-        binding.detailWidthTextView.text = arguments?.getString("image_width")
-        binding.detailHeightTextView.text = arguments?.getString("image_height")
+        binding.detailWidthTextView.text = arguments?.getInt("image_width").toString()
+        binding.detailHeightTextView.text = arguments?.getInt("image_height").toString()
         binding.detailWebSiteUrlTextView.text = arguments?.getString("image_webSiteUrl")
         binding.detailUrlTextView.text = arguments?.getString("image_url")
     }
@@ -56,10 +56,10 @@ class GalleryDetailFragment : Fragment() {
     companion object {
         fun newInstance(galleryItem: Picsum): GalleryDetailFragment {
             val args = Bundle().apply {
-                putString("image_id", galleryItem.id)
+                putInt("image_id", galleryItem.id)
                 putString("image_author", galleryItem.author)
-                putString("image_width", galleryItem.width)
-                putString("image_height", galleryItem.height)
+                putInt("image_width", galleryItem.width)
+                putInt("image_height", galleryItem.height)
                 putString("image_webSiteUrl", galleryItem.webSiteUrl)
                 putString("image_url", galleryItem.url)
             }

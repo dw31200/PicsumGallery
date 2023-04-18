@@ -1,12 +1,16 @@
 package com.example.picsumgallery.data
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class Picsum(
-    var id: String = "",
-    var author: String = "",
-    var width: String = "",
-    var height: String = "",
-    @Json(name = "url") var webSiteUrl: String = "",
-    @Json(name = "download_url") var url: String = "",
+    val id: Int,
+    val author: String,
+    val width: Int,
+    val height: Int,
+    @Json(name = "url")
+    val webSiteUrl: String,
+    @Json(name = "download_url")
+    val url: String,
 )

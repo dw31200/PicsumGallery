@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 
+// 230418
 class GalleryAdapter(var galleryItems: List<Picsum>, private val onClick: (Picsum) -> Unit) : RecyclerView.Adapter<GalleryHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_gallery, parent, false)
@@ -14,8 +15,11 @@ class GalleryAdapter(var galleryItems: List<Picsum>, private val onClick: (Picsu
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
         val galleryItem = galleryItems[position]
-        holder.bindGalleryItem(galleryItem)
+        holder.bind(galleryItem)
     }
 
     override fun getItemCount(): Int = galleryItems.size
+    fun fetchData() {
+        notifyDataSetChanged()
+    }
 }
