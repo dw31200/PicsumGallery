@@ -8,7 +8,6 @@ import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.squareup.picasso.Picasso
 
-//  230418
 class GalleryHolder(view: View, val onClick: (Picsum) -> Unit) : RecyclerView.ViewHolder(view) {
     private lateinit var galleryItem: Picsum
     private val galleryImageView: ImageView = view.findViewById(R.id.gallery_image)
