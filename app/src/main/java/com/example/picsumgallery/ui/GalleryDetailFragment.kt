@@ -3,6 +3,7 @@ package com.example.picsumgallery.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,11 @@ import androidx.fragment.app.Fragment
 import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
+import com.example.picsumgallery.network.PicsumApi
 import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class GalleryDetailFragment : Fragment() {
     private lateinit var binding: FragmentGalleryDetailBinding
@@ -38,6 +43,15 @@ class GalleryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        PicsumApi.retrofitService.getItem("1").enqueue(object : Callback<Picsum> {
+            override fun onResponse(call: Call<Picsum>, response: Response<Picsum>) {
+                Log.d("GalleryDetailFragment", "Response received ${response.body()}")
+            }
+
+            override fun onFailure(call: Call<Picsum>, t: Throwable) {
+                Log.e("GalleryDetailFragment", "Failed to fetch image", t)
+            }
+        })
         updateUI()
     }
 
