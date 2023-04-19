@@ -1,4 +1,4 @@
-package com.example.picsumgallery
+package com.example.picsumgallery.network
 
 import com.example.picsumgallery.data.Picsum
 import retrofit2.Call
