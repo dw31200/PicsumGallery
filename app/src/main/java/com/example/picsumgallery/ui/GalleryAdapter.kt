@@ -19,11 +19,10 @@ class GalleryAdapter(
     }
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
-        val galleryItem = galleryItems[position]
-        holder.bind(galleryItem)
+        holder.bind(position)
         holder.binding.root.setOnClickListener {
-            onClick(galleryItem.id)
-            Log.d("GalleryAdapter", "clicked #${galleryItem.id}")
+            onClick(position)
+            Log.d("GalleryAdapter", "clicked #$position")
         }
     }
 
