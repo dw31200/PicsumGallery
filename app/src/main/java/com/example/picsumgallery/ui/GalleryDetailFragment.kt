@@ -43,39 +43,36 @@ class GalleryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        PicsumApi.retrofitService.getItem("1").enqueue(object : Callback<Picsum> {
+        PicsumApi.retrofitService.getItem(arguments?.getInt("image_id").toString()).enqueue(object : Callback<Picsum> {
             override fun onResponse(call: Call<Picsum>, response: Response<Picsum>) {
                 Log.d("GalleryDetailFragment", "Response received ${response.body()}")
+                response.body()?.let {
+                    updateUI(it)
+                }
             }
 
             override fun onFailure(call: Call<Picsum>, t: Throwable) {
                 Log.e("GalleryDetailFragment", "Failed to fetch image", t)
             }
         })
-        updateUI()
     }
 
-    private fun updateUI() {
+    private fun updateUI(galleryItem: Picsum) {
         Picasso.get()
-            .load(arguments?.getString("image_url"))
+            .load(galleryItem.url)
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(binding.detailImageView)
-        binding.detailAuthorTextView.text = arguments?.getString("image_author")
-        binding.detailWidthTextView.text = arguments?.getInt("image_width").toString()
-        binding.detailHeightTextView.text = arguments?.getInt("image_height").toString()
-        binding.detailWebSiteUrlTextView.text = arguments?.getString("image_webSiteUrl")
-        binding.detailUrlTextView.text = arguments?.getString("image_url")
+        binding.detailAuthorTextView.text = galleryItem.author
+        binding.detailWidthTextView.text = galleryItem.width.toString()
+        binding.detailHeightTextView.text = galleryItem.height.toString()
+        binding.detailWebSiteUrlTextView.text = galleryItem.webSiteUrl
+        binding.detailUrlTextView.text = galleryItem.url
     }
 
     companion object {
-        fun newInstance(galleryItem: Picsum): GalleryDetailFragment {
+        fun newInstance(galleryId: Int): GalleryDetailFragment {
             val args = Bundle().apply {
-                putInt("image_id", galleryItem.id)
-                putString("image_author", galleryItem.author)
-                putInt("image_width", galleryItem.width)
-                putInt("image_height", galleryItem.height)
-                putString("image_webSiteUrl", galleryItem.webSiteUrl)
-                putString("image_url", galleryItem.url)
+                putInt("image_id", galleryId)
             }
             return GalleryDetailFragment().apply {
                 arguments = args
