@@ -44,7 +44,7 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val mAdapter = GalleryAdapter { galleryItems -> adapterOnClick(galleryItems) }
+        val mAdapter = GalleryAdapter()
         binding.galleryList.adapter = mAdapter
 
         PicsumApi.retrofitService.fetchContents().enqueue(object : Callback<List<Picsum>> {
