@@ -26,7 +26,6 @@ class GalleryDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
-        val view = binding.root
         binding.detailWebSiteUrlTextView.setOnClickListener {
             val intent = Intent(
                 Intent.ACTION_VIEW,
@@ -38,7 +37,7 @@ class GalleryDetailFragment : Fragment() {
         }
         binding.detailUrlTextView.setOnClickListener {}
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

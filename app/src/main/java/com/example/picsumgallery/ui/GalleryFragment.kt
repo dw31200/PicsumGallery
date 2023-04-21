@@ -30,14 +30,6 @@ class GalleryFragment : Fragment() {
         return binding.root
     }
 
-    private fun adapterOnClick(galleryId: Int) {
-        val fragment = GalleryDetailFragment.newInstance(galleryId)
-        parentFragmentManager.commit {
-            replace(R.id.fragment_container, fragment)
-            addToBackStack(null)
-        }
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -58,5 +50,13 @@ class GalleryFragment : Fragment() {
                 Log.e("GalleryFragment", "Failed to fetch image", t)
             }
         })
+    }
+
+    private fun adapterOnClick(galleryId: Int) {
+        val fragment = GalleryDetailFragment.newInstance(galleryId)
+        parentFragmentManager.commit {
+            replace(R.id.fragment_container, fragment)
+            addToBackStack(null)
+        }
     }
 }

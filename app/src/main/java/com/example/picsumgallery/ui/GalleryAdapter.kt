@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.ListItemGalleryBinding
 
-// 230418
 class GalleryAdapter(
     private var galleryItems: List<Picsum> = emptyList(),
     private val onClick: (Int) -> Unit,
