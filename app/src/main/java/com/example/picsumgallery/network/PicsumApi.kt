@@ -6,13 +6,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object PicsumApi {
-    private val BASE_URL = "https://picsum.photos/"
-    val moshi = Moshi.Builder()
-        .addLast(KotlinJsonAdapterFactory())
+    private const val BASE_URL = "https://picsum.photos/"
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
         .build()
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .baseUrl(BASE_URL)
         .build()
-    val retrofitService: PicsumApiService by lazy { retrofit.create(PicsumApiService::class.java) }
+    val retrofitService: PicsumApiService = retrofit.create(PicsumApiService::class.java)
 }

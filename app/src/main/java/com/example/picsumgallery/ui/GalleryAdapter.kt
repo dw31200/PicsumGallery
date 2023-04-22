@@ -8,7 +8,7 @@ import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.ListItemGalleryBinding
 
 class GalleryAdapter(
-    private var galleryItems: List<Picsum> = emptyList(),
+    private val galleryItems: MutableList<Picsum> = mutableListOf(),
     private val onClick: (Int) -> Unit,
 ) :
     RecyclerView.Adapter<GalleryHolder>() {
@@ -18,16 +18,17 @@ class GalleryAdapter(
     }
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(galleryItems[position])
         holder.binding.root.setOnClickListener {
-            onClick(position)
+            onClick(galleryItems[position].id)
             Log.d("GalleryAdapter", "clicked #$position")
         }
     }
 
     override fun getItemCount(): Int = galleryItems.size
     fun fetchData(galleryItems: List<Picsum>) {
-        this.galleryItems = galleryItems
+        this.galleryItems.clear()
+        this.galleryItems.addAll(galleryItems)
         notifyDataSetChanged()
     }
 }
