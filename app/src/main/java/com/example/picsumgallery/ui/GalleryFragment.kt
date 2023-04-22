@@ -17,16 +17,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class GalleryFragment : Fragment() {
-    private lateinit var binding: FragmentGalleryBinding
+    private var _binding: FragmentGalleryBinding? = null
+    private val binding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         binding.galleryList.layoutManager = GridLayoutManager(context, 2)
-
         return binding.root
     }
 
@@ -58,5 +59,10 @@ class GalleryFragment : Fragment() {
             replace(R.id.fragment_container, fragment)
             addToBackStack(null)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

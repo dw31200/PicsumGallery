@@ -18,14 +18,16 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class GalleryDetailFragment : Fragment() {
-    private lateinit var binding: FragmentGalleryDetailBinding
+    private var _binding: FragmentGalleryDetailBinding? = null
+    private val binding
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
         binding.detailWebSiteUrlTextView.setOnClickListener {
             val intent = Intent(
                 Intent.ACTION_VIEW,
@@ -66,6 +68,11 @@ class GalleryDetailFragment : Fragment() {
         binding.detailHeightTextView.text = galleryItem.height.toString()
         binding.detailWebSiteUrlTextView.text = galleryItem.webSiteUrl
         binding.detailUrlTextView.text = galleryItem.url
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {
