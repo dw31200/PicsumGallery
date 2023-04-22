@@ -28,23 +28,14 @@ class GalleryDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
-        binding.detailWebSiteUrlTextView.setOnClickListener {
-            val intent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(arguments?.getString("image_webSiteUrl"))
-                    .buildUpon()
-                    .build(),
-            )
-            startActivity(intent)
-        }
-        binding.detailUrlTextView.setOnClickListener {}
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        PicsumApi.retrofitService.getItem(arguments?.getInt("image_id").toString()).enqueue(object : Callback<Picsum> {
+        val galleryId = arguments?.getInt("image_id") ?: 0
+
+        PicsumApi.retrofitService.getItem(galleryId).enqueue(object : Callback<Picsum> {
             override fun onResponse(call: Call<Picsum>, response: Response<Picsum>) {
                 Log.d("GalleryDetailFragment", "Response received ${response.body()}")
                 response.body()?.let {
@@ -56,6 +47,16 @@ class GalleryDetailFragment : Fragment() {
                 Log.e("GalleryDetailFragment", "Failed to fetch image", t)
             }
         })
+        binding.detailWebSiteUrlTextView.setOnClickListener {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(binding.detailWebSiteUrlTextView.text.toString())
+                    .buildUpon()
+                    .build(),
+            )
+            startActivity(intent)
+        }
+        binding.detailUrlTextView.setOnClickListener {}
     }
 
     private fun updateUI(galleryItem: Picsum) {
@@ -76,13 +77,12 @@ class GalleryDetailFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(galleryId: Int): GalleryDetailFragment {
+        const val BUNDLE_ID = "image_id"
+        fun args(galleryId: Int): Bundle {
             val args = Bundle().apply {
-                putInt("image_id", galleryId)
+                putInt(BUNDLE_ID, galleryId)
             }
-            return GalleryDetailFragment().apply {
-                arguments = args
-            }
+            return args
         }
     }
 }

@@ -10,5 +10,5 @@ interface PicsumApiService {
     fun fetchContents(): Call<List<Picsum>>
 
     @GET("id/{id}/info")
-    fun getItem(@Path("id") id: String): Call<Picsum>
+    fun getItem(@Path("id") id: Int): Call<Picsum>
 }

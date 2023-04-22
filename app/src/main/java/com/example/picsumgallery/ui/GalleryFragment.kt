@@ -12,6 +12,7 @@ import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryBinding
 import com.example.picsumgallery.network.PicsumApi
+import com.example.picsumgallery.ui.GalleryDetailFragment.Companion.args
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +28,6 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        binding.galleryList.layoutManager = GridLayoutManager(context, 2)
         return binding.root
     }
 
@@ -36,14 +36,14 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val mAdapter = GalleryAdapter { galleryId -> adapterOnClick(galleryId) }
-        binding.galleryList.adapter = mAdapter
+        binding.galleryList.adapter = GalleryAdapter { galleryId -> adapterOnClick(galleryId) }
+        binding.galleryList.layoutManager = GridLayoutManager(context, 2)
 
         PicsumApi.retrofitService.fetchContents().enqueue(object : Callback<List<Picsum>> {
             override fun onResponse(call: Call<List<Picsum>>, response: Response<List<Picsum>>) {
                 Log.d("GalleryFragment", "Response received ${response.body()}")
                 response.body()?.let {
-                    mAdapter.fetchData(it)
+                    (binding.galleryList.adapter as GalleryAdapter).fetchData(it)
                 }
             }
 
@@ -54,9 +54,13 @@ class GalleryFragment : Fragment() {
     }
 
     private fun adapterOnClick(galleryId: Int) {
-        val fragment = GalleryDetailFragment.newInstance(galleryId)
         parentFragmentManager.commit {
-            replace(R.id.fragment_container, fragment)
+            replace(
+                R.id.fragment_container,
+                GalleryDetailFragment().apply {
+                    arguments = args(galleryId)
+                },
+            )
             addToBackStack(null)
         }
     }

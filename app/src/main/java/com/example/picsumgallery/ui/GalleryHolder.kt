@@ -15,7 +15,7 @@ class GalleryHolder(val binding: ListItemGalleryBinding) : RecyclerView.ViewHold
     private lateinit var galleryItem: Picsum
 
     fun bind(galleryId: Int) {
-        PicsumApi.retrofitService.getItem(galleryId.toString()).enqueue(object : Callback<Picsum> {
+        PicsumApi.retrofitService.getItem(galleryId).enqueue(object : Callback<Picsum> {
             override fun onResponse(call: Call<Picsum>, response: Response<Picsum>) {
                 Log.d("GalleryHolder", "Response received ${response.body()}")
                 response.body()?.let {
