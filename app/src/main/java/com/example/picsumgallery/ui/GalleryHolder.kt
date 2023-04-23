@@ -13,7 +13,7 @@ class GalleryHolder(
         with(binding) {
             galleryAuthor.text = galleryItem.author
             Glide
-                .with(binding.root)
+                .with(root)
                 .load(galleryItem.url)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_foreground)

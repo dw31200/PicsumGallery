@@ -64,7 +64,6 @@ class GalleryDetailFragment : Fragment() {
             Glide
                 .with(root)
                 .load(galleryItem.url)
-                .centerCrop()
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(detailImageView)
             detailAuthorTextView.text = galleryItem.author

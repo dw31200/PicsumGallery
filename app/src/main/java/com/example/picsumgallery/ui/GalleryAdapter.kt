@@ -21,7 +21,7 @@ class GalleryAdapter(
         holder.bind(galleryItems[position])
         holder.binding.root.setOnClickListener {
             onClick(galleryItems[position].id)
-            Log.d("GalleryAdapter", "clicked #$position")
+            Log.d("GalleryAdapter", "clicked #${galleryItems[position].id}")
         }
     }
 
