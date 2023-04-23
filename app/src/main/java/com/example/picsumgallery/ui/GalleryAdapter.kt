@@ -1,21 +1,34 @@
 package com.example.picsumgallery.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
+import com.example.picsumgallery.databinding.ListItemGalleryBinding
 
-class GalleryAdapter(var galleryItems: List<Picsum>, private val onClick: (Picsum) -> Unit) : RecyclerView.Adapter<GalleryHolder>() {
+class GalleryAdapter(
+    private val galleryItems: MutableList<Picsum> = mutableListOf(),
+    private val onClick: (Int) -> Unit,
+) :
+    RecyclerView.Adapter<GalleryHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_gallery, parent, false)
-        return GalleryHolder(view, onClick)
+        val binding = ListItemGalleryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return GalleryHolder(binding)
     }
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
-        val galleryItem = galleryItems[position]
-        holder.bindGalleryItem(galleryItem)
+        holder.bind(galleryItems[position])
+        holder.binding.root.setOnClickListener {
+            onClick(galleryItems[position].id)
+            Log.d("GalleryAdapter", "clicked #${galleryItems[position].id}")
+        }
     }
 
     override fun getItemCount(): Int = galleryItems.size
+    fun fetchData(galleryItems: List<Picsum>) {
+        this.galleryItems.clear()
+        this.galleryItems.addAll(galleryItems)
+        notifyDataSetChanged()
+    }
 }
