@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="20dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginHorizontal="10dp">
 
     <ImageView
         android:id="@+id/gallery_image"
@@ -20,11 +21,11 @@
     <TextView
         android:id="@+id/gallery_author"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="author"
-        app:layout_constraintEnd_toEndOf="@id/gallery_image"
-        app:layout_constraintStart_toStartOf="@id/gallery_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gallery_image"
         app:layout_constraintBottom_toBottomOf="parent" />
 

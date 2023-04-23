@@ -1,18 +1,23 @@
 package com.example.picsumgallery.ui
 
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.ListItemGalleryBinding
-import com.squareup.picasso.Picasso
 
 class GalleryHolder(
     val binding: ListItemGalleryBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(galleryItem: Picsum) {
-        binding.galleryAuthor.text = galleryItem.author
-        Picasso
-            .get()
-            .load(galleryItem.url)
-            .into(binding.galleryImage)
+        with(binding) {
+            galleryAuthor.text = galleryItem.author
+            Glide
+                .with(binding.root)
+                .load(galleryItem.url)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(galleryImage)
+        }
     }
 }

@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
 import com.example.picsumgallery.network.PicsumApi
-import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,15 +60,19 @@ class GalleryDetailFragment : Fragment() {
     }
 
     private fun updateUI(galleryItem: Picsum) {
-        Picasso.get()
-            .load(galleryItem.url)
-            .placeholder(R.drawable.ic_launcher_foreground)
-            .into(binding.detailImageView)
-        binding.detailAuthorTextView.text = galleryItem.author
-        binding.detailWidthTextView.text = galleryItem.width.toString()
-        binding.detailHeightTextView.text = galleryItem.height.toString()
-        binding.detailWebSiteUrlTextView.text = galleryItem.webSiteUrl
-        binding.detailUrlTextView.text = galleryItem.url
+        with(binding) {
+            Glide
+                .with(root)
+                .load(galleryItem.url)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(detailImageView)
+            detailAuthorTextView.text = galleryItem.author
+            detailWidthTextView.text = galleryItem.width.toString()
+            detailHeightTextView.text = galleryItem.height.toString()
+            detailWebSiteUrlTextView.text = galleryItem.webSiteUrl
+            detailUrlTextView.text = galleryItem.url
+        }
     }
 
     override fun onDestroy() {
