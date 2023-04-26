@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.picsumgallery.R
 import com.example.picsumgallery.databinding.FragmentGalleryBinding
 import com.example.picsumgallery.network.PicsumApi
@@ -35,7 +34,7 @@ class GalleryFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.galleryList.adapter = GalleryAdapter { galleryId -> adapterOnClick(galleryId) }
-        binding.galleryList.layoutManager = GridLayoutManager(context, 2)
+        binding.galleryList.addItemDecoration(GalleryItemDecoration())
 
         lifecycleScope.launch {
             val list = PicsumApi.retrofitService.fetchContents()
