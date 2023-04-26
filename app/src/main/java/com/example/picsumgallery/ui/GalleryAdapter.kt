@@ -10,7 +10,8 @@ import com.example.picsumgallery.databinding.ListItemGalleryBinding
 class GalleryAdapter(
     private val galleryItems: MutableList<Picsum> = mutableListOf(),
     private val onClick: (Int) -> Unit,
-) : RecyclerView.Adapter<GalleryHolder>() {
+) :
+    RecyclerView.Adapter<GalleryHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryHolder {
         val binding = ListItemGalleryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return GalleryHolder(binding)

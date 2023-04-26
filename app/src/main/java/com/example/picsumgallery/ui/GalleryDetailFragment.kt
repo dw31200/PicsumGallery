@@ -3,17 +3,19 @@ package com.example.picsumgallery.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
 import com.example.picsumgallery.network.PicsumApi
-import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class GalleryDetailFragment : Fragment() {
     private var _binding: FragmentGalleryDetailBinding? = null
@@ -33,10 +35,28 @@ class GalleryDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val galleryId = arguments?.getInt("image_id") ?: 0
 
-        lifecycleScope.launch {
-            val item = PicsumApi.retrofitService.getItem(galleryId)
-            updateUI(item)
+        PicsumApi.retrofitService.getItem(galleryId).enqueue(object : Callback<Picsum> {
+            override fun onResponse(call: Call<Picsum>, response: Response<Picsum>) {
+                Log.d("GalleryDetailFragment", "Response received ${response.body()}")
+                response.body()?.let {
+                    updateUI(it)
+                }
+            }
+
+            override fun onFailure(call: Call<Picsum>, t: Throwable) {
+                Log.e("GalleryDetailFragment", "Failed to fetch image", t)
+            }
+        })
+        binding.detailWebSiteUrlTextView.setOnClickListener {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(binding.detailWebSiteUrlTextView.text.toString())
+                    .buildUpon()
+                    .build(),
+            )
+            startActivity(intent)
         }
+        binding.detailUrlTextView.setOnClickListener {}
     }
 
     private fun updateUI(galleryItem: Picsum) {
@@ -51,16 +71,6 @@ class GalleryDetailFragment : Fragment() {
             detailHeightTextView.text = galleryItem.height.toString()
             detailWebSiteUrlTextView.text = galleryItem.webSiteUrl
             detailUrlTextView.text = galleryItem.url
-            detailWebSiteUrlTextView.setOnClickListener {
-                val intent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(galleryItem.url)
-                        .buildUpon()
-                        .build(),
-                )
-                startActivity(intent)
-            }
-            detailUrlTextView.setOnClickListener {}
         }
     }
 
