@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class GalleryItemDecoration(
-    private val offset: Int = 10,
+    private val width: Int = 10,
+    private val height: Int = 10,
 ) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
@@ -23,22 +24,30 @@ class GalleryItemDecoration(
         val spanIndex = (view.layoutParams as GridLayoutManager.LayoutParams).spanIndex
         val spanCount = (parent.layoutManager as GridLayoutManager).spanCount
 
-        if (position < spanCount) {
-            outRect.bottom = offset
-        } else if (position >= (count - spanCount)) {
-            outRect.top = offset
-        } else {
-            outRect.top = offset
-            outRect.bottom = offset
+        when {
+            position < spanCount -> {
+                outRect.bottom = height / 2
+            }
+            position >= (count - spanCount) -> {
+                outRect.top = height / 2
+            }
+            else -> {
+                outRect.top = height / 2
+                outRect.bottom = height / 2
+            }
         }
 
-        if (spanIndex == 0) {
-            outRect.right = offset
-        } else if (spanIndex == spanCount - 1) {
-            outRect.left = offset
-        } else {
-            outRect.left = offset
-            outRect.right = offset
+        when (spanIndex) {
+            0 -> {
+                outRect.right = width / 2
+            }
+            spanCount - 1 -> {
+                outRect.left = width / 2
+            }
+            else -> {
+                outRect.left = width / 2
+                outRect.right = width / 2
+            }
         }
     }
 }

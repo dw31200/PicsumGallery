@@ -39,7 +39,7 @@ class GalleryFragment : Fragment() {
         lifecycleScope.launch {
             binding.progressLoading.visibility = View.VISIBLE
             val list = PicsumApi.retrofitService.fetchContents()
-            binding.progressLoading.visibility = View.INVISIBLE
+            binding.progressLoading.visibility = View.GONE
             (binding.galleryList.adapter as GalleryAdapter).fetchData(list)
         }
     }
