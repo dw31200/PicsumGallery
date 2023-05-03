@@ -1,4 +1,4 @@
-package com.example.picsumgallery.ui
+package com.example.picsumgallery.ui.list.adapter
 
 import android.util.Log
 import android.view.LayoutInflater

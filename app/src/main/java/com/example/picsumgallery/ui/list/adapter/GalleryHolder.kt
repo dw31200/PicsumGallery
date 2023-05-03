@@ -1,4 +1,4 @@
-package com.example.picsumgallery.ui
+package com.example.picsumgallery.ui.list.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
