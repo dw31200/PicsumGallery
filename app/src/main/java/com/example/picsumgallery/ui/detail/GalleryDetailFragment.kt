@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
 import com.example.picsumgallery.ui.detail.contract.GalleryDetailContract
@@ -55,41 +54,64 @@ class GalleryDetailFragment : Fragment(), GalleryDetailContract.View {
             return args
         }
     }
-    // endregion
 
+    // endregion
     // region GalleryDetailContract.View
     override val coroutineScope: CoroutineScope
         get() = this@GalleryDetailFragment.lifecycleScope
 
-    override fun setItem(galleryItem: Picsum) {
-        updateUI(galleryItem)
-    }
-
-    private fun updateUI(galleryItem: Picsum) {
+    override fun setItem(prevItem: Picsum?, currentItem: Picsum?, nextItem: Picsum?) {
         with(binding) {
-            Glide
-                .with(root)
-                .load(galleryItem.url)
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(detailImageView)
-            detailAuthorTextView.text = galleryItem.author
-            detailWidthTextView.text = galleryItem.width.toString()
-            detailHeightTextView.text = galleryItem.height.toString()
-            detailWebSiteUrlTextView.text = galleryItem.webSiteUrl
-            detailUrlTextView.text = galleryItem.url
-            detailWebSiteUrlTextView.setOnClickListener {
-                presenter.onUrlClicked(galleryItem)
+            if (currentItem != null) {
+                Glide
+                    .with(root)
+                    .load(currentItem.url)
+                    .into(detailImageView)
+                Glide
+                    .with(root)
+                    .load(currentItem.url)
+                    .into(currentImageView)
+                detailAuthorTextView.text = currentItem.author
+                detailWidthTextView.text = currentItem.width.toString()
+                detailHeightTextView.text = currentItem.height.toString()
+                detailWebSiteUrlTextView.text = currentItem.webSiteUrl
+                detailUrlTextView.text = currentItem.url
+                detailWebSiteUrlTextView.setOnClickListener {
+                    presenter.onUrlClicked(currentItem)
+                }
+                detailUrlTextView.setOnClickListener {}
+                prevButton.setOnClickListener {
+                    presenter.onPrevButtonClicked(currentItem.id)
+                }
+                nextButton.setOnClickListener {
+                    presenter.onNextButtonClicked(currentItem.id)
+                }
             }
-            detailUrlTextView.setOnClickListener {}
+            if (prevItem != null) {
+                prevImageView.visibility = View.VISIBLE
+                Glide
+                    .with(root)
+                    .load(prevItem.url)
+                    .into(prevImageView)
+            } else {
+                prevImageView.visibility = View.INVISIBLE
+            }
+            if (nextItem != null) {
+                nextImageView.visibility = View.VISIBLE
+                Glide
+                    .with(root)
+                    .load(nextItem.url)
+                    .into(nextImageView)
+            } else {
+                nextImageView.visibility = View.INVISIBLE
+            }
         }
     }
 
     override fun showWebSite(galleryItem: Picsum) {
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse(galleryItem.webSiteUrl)
-                .buildUpon()
-                .build(),
+            Uri.parse(galleryItem.webSiteUrl),
         )
         startActivity(intent)
     }

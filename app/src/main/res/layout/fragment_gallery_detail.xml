@@ -64,4 +64,52 @@
         app:layout_constraintStart_toStartOf="@id/detail_imageView"
         app:layout_constraintTop_toBottomOf="@id/detail_webSiteUrl_textView" />
 
+    <ImageView
+        android:id="@+id/prev_imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/prev_button"
+        app:layout_constraintEnd_toStartOf="@id/current_imageView"
+        app:layout_constraintStart_toEndOf="@id/prev_button"
+        tools:src="@drawable/ic_launcher_foreground" />
+
+    <ImageView
+        android:id="@+id/current_imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/prev_button"
+        app:layout_constraintEnd_toStartOf="@id/next_imageView"
+        app:layout_constraintStart_toEndOf="@id/prev_imageView"
+        android:background="@drawable/square_background_border_black"
+        tools:src="@drawable/ic_launcher_foreground" />
+
+    <ImageView
+        android:id="@+id/next_imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/prev_button"
+        app:layout_constraintEnd_toStartOf="@id/next_button"
+        app:layout_constraintStart_toEndOf="@id/current_imageView"
+        tools:src="@drawable/ic_launcher_foreground" />
+
+    <Button
+        android:id="@+id/prev_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/baseline_navigate_before_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/baseline_navigate_next_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
