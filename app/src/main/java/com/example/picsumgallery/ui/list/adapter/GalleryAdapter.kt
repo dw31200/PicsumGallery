@@ -1,11 +1,11 @@
 package com.example.picsumgallery.ui.list.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.ListItemGalleryBinding
+import timber.log.Timber
 
 class GalleryAdapter(
     private val galleryItems: MutableList<Picsum> = mutableListOf(),
@@ -20,7 +20,7 @@ class GalleryAdapter(
         holder.bind(galleryItems[position])
         holder.binding.root.setOnClickListener {
             onClick(galleryItems[position].id)
-            Log.d("GalleryAdapter", "clicked #${galleryItems[position].id}")
+            Timber.d("clicked #${galleryItems[position].id}")
         }
     }
 
