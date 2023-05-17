@@ -30,4 +30,9 @@ class GalleryAdapter(
         this.galleryItems.addAll(galleryItems)
         notifyDataSetChanged()
     }
+
+    fun addData(galleryItems: List<Picsum>) {
+        this.galleryItems.addAll(galleryItems)
+        notifyDataSetChanged()
+    }
 }

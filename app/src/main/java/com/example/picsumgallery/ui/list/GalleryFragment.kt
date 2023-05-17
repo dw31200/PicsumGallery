@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.R
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryBinding
@@ -44,6 +46,18 @@ class GalleryFragment : Fragment(), GalleryContract.View {
         super.onViewCreated(view, savedInstanceState)
         binding.galleryList.adapter = GalleryAdapter { galleryId -> presenter.onItemClicked(galleryId) }
         binding.galleryList.addItemDecoration(GalleryItemDecoration())
+        binding.galleryList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager
+                val lastVisibleItemPosition = (layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+                val itemCount = recyclerView.adapter?.itemCount?.minus(1)
+
+                if (lastVisibleItemPosition == itemCount) {
+                    presenter.onLoadNextPage()
+                }
+            }
+        })
 
         presenter.start()
     }
@@ -60,6 +74,10 @@ class GalleryFragment : Fragment(), GalleryContract.View {
 
     override fun setList(list: List<Picsum>) {
         (binding.galleryList.adapter as GalleryAdapter).fetchData(list)
+    }
+
+    override fun addList(list: List<Picsum>) {
+        (binding.galleryList.adapter as GalleryAdapter).addData(list)
     }
 
     override fun navigateToDetail(galleryId: Int) {

@@ -9,6 +9,8 @@ interface GalleryContract {
 
         fun setList(list: List<Picsum>)
 
+        fun addList(list: List<Picsum>)
+
         fun navigateToDetail(galleryId: Int)
 
         fun showProgress()
@@ -20,5 +22,7 @@ interface GalleryContract {
         fun start()
 
         fun onItemClicked(galleryId: Int)
+
+        fun onLoadNextPage()
     }
 }
