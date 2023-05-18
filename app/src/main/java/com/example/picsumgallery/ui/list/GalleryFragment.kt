@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -88,7 +88,7 @@ class GalleryFragment : Fragment(), GalleryContract.View {
                 R.anim.fade_in,
                 R.anim.slide_out,
             )
-            replace<GalleryDetailFragment>(
+            add<GalleryDetailFragment>(
                 R.id.fragment_container,
                 args = args(galleryId),
             )
