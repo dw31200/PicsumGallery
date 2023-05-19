@@ -1,9 +1,13 @@
-package com.example.picsumgallery.ui.list.contract
+package com.example.picsumgallery.ui.list
 
 import com.example.picsumgallery.data.Picsum
 import kotlinx.coroutines.CoroutineScope
 
 interface GalleryContract {
+    interface Model {
+        suspend fun fetchContents(page: Int): List<Picsum>
+    }
+
     interface View {
         val coroutineScope: CoroutineScope
 

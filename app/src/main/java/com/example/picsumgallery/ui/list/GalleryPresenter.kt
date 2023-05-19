@@ -1,10 +1,11 @@
-package com.example.picsumgallery.ui.list.contract
+package com.example.picsumgallery.ui.list
 
-import com.example.picsumgallery.network.PicsumApi
+import com.example.picsumgallery.network.PicsumApiService
 import kotlinx.coroutines.launch
 
 class GalleryPresenter(
     private val view: GalleryContract.View,
+    private val model: GalleryContract.Model,
 ) : GalleryContract.Presenter {
     private var page = 1
     private var nextLoading = true
@@ -12,12 +13,12 @@ class GalleryPresenter(
         view.showProgress()
 
         view.coroutineScope.launch {
-            val list = PicsumApi.retrofitService.fetchContents(page)
+            val list = model.fetchContents(page)
             view.setList(list)
             view.hideProgress()
             page++
 
-            if (list.size < 30) {
+            if (list.size < PicsumApiService.LIMIT) {
                 nextLoading = false
             }
         }
@@ -30,11 +31,11 @@ class GalleryPresenter(
     override fun onLoadNextPage() {
         if (!nextLoading) return
         view.coroutineScope.launch {
-            val list = PicsumApi.retrofitService.fetchContents(page)
+            val list = model.fetchContents(page)
             view.addList(list)
             page++
 
-            if (list.size < 30) {
+            if (list.size < PicsumApiService.LIMIT) {
                 nextLoading = false
             }
         }

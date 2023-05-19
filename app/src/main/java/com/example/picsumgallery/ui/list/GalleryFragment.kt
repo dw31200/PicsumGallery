@@ -17,15 +17,13 @@ import com.example.picsumgallery.ui.detail.GalleryDetailFragment
 import com.example.picsumgallery.ui.detail.GalleryDetailFragment.Companion.args
 import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
 import com.example.picsumgallery.ui.list.adapter.GalleryItemDecoration
-import com.example.picsumgallery.ui.list.contract.GalleryContract
-import com.example.picsumgallery.ui.list.contract.GalleryPresenter
 import kotlinx.coroutines.CoroutineScope
 
 class GalleryFragment : Fragment(), GalleryContract.View {
     private var _binding: FragmentGalleryBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var presenter: GalleryPresenter
+    private lateinit var presenter: GalleryContract.Presenter
 
     //    region fragment lifecycle
     override fun onCreateView(
@@ -35,7 +33,7 @@ class GalleryFragment : Fragment(), GalleryContract.View {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        presenter = GalleryPresenter(this)
+        presenter = GalleryPresenter(this, GalleryModel())
         return binding.root
     }
 
@@ -50,10 +48,10 @@ class GalleryFragment : Fragment(), GalleryContract.View {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager
-                val lastVisibleItemPosition = (layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+                val lastCompletelyVisibleItemPosition = (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
                 val itemCount = recyclerView.adapter?.itemCount?.minus(1)
 
-                if (lastVisibleItemPosition == itemCount) {
+                if (lastCompletelyVisibleItemPosition == itemCount) {
                     presenter.onLoadNextPage()
                 }
             }

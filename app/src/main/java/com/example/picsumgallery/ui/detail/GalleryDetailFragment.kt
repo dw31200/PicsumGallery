@@ -11,15 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
-import com.example.picsumgallery.ui.detail.contract.GalleryDetailContract
-import com.example.picsumgallery.ui.detail.contract.GalleryDetailPresenter
 import kotlinx.coroutines.CoroutineScope
 
 class GalleryDetailFragment : Fragment(), GalleryDetailContract.View {
     private var _binding: FragmentGalleryDetailBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var presenter: GalleryDetailPresenter
+    private lateinit var presenter: GalleryDetailContract.Presenter
 
     // region fragment lifecycle
     override fun onCreateView(
@@ -29,7 +27,7 @@ class GalleryDetailFragment : Fragment(), GalleryDetailContract.View {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
-        presenter = GalleryDetailPresenter(this)
+        presenter = GalleryDetailPresenter(this, GalleryDetailModel())
         return binding.root
     }
 
