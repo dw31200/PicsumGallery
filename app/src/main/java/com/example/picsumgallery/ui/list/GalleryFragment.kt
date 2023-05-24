@@ -48,7 +48,7 @@ class GalleryFragment : Fragment(), GalleryContract.View {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager
-                val lastCompletelyVisibleItemPosition = (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
+                val lastCompletelyVisibleItemPosition = (layoutManager as? GridLayoutManager)?.findLastCompletelyVisibleItemPosition()
                 val itemCount = recyclerView.adapter?.itemCount?.minus(1)
 
                 if (lastCompletelyVisibleItemPosition == itemCount) {
@@ -60,8 +60,8 @@ class GalleryFragment : Fragment(), GalleryContract.View {
         presenter.start()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

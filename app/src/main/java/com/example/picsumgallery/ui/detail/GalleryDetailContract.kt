@@ -10,14 +10,18 @@ interface GalleryDetailContract {
 
     interface View {
         val coroutineScope: CoroutineScope
-        fun setItem(prevItem: Picsum?, currentItem: Picsum?, nextItem: Picsum?)
+        fun showCurrentItem(currentItem: Picsum)
         fun showWebSite(galleryItem: Picsum)
+        fun showPrevItem(prevItem: Picsum)
+        fun showNextItem(nextItem: Picsum)
+        fun hidePrevItem()
+        fun hideNextItem()
     }
 
     interface Presenter {
-        fun start(galleryId: Int)
+        fun start()
         fun onUrlClicked(galleryItem: Picsum)
-        fun onPrevButtonClicked(galleryId: Int)
-        fun onNextButtonClicked(galleryId: Int)
+        fun onPrevButtonClicked()
+        fun onNextButtonClicked()
     }
 }

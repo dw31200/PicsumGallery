@@ -10,6 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object Network {
+    private const val CONNECT_TIMEOUT_POLICY = 20L
     private const val BASE_URL = "https://picsum.photos/"
     private val interceptor = HttpLoggingInterceptor().apply {
         level = if (BuildConfig.DEBUG) {
@@ -19,7 +20,7 @@ object Network {
         }
     }
     private val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(20L, TimeUnit.SECONDS)
+        .connectTimeout(CONNECT_TIMEOUT_POLICY, TimeUnit.SECONDS)
         .addInterceptor(interceptor)
         .build()
     private val moshi = Moshi.Builder()

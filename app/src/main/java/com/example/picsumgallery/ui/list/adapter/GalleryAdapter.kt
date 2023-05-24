@@ -1,5 +1,6 @@
 package com.example.picsumgallery.ui.list.adapter
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.data.Picsum
@@ -16,6 +17,8 @@ class GalleryAdapter(
     }
 
     override fun getItemCount(): Int = galleryItems.size
+
+    @SuppressLint("NotifyDataSetChanged")
     fun fetchData(galleryItems: List<Picsum>) {
         this.galleryItems.clear()
         this.galleryItems.addAll(galleryItems)
@@ -23,7 +26,8 @@ class GalleryAdapter(
     }
 
     fun addData(galleryItems: List<Picsum>) {
+        val positionStart = this.galleryItems.size
         this.galleryItems.addAll(galleryItems)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(positionStart, galleryItems.size)
     }
 }

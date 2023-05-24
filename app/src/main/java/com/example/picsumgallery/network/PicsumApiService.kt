@@ -1,7 +1,6 @@
 package com.example.picsumgallery.network
 
 import com.example.picsumgallery.data.Picsum
-import retrofit2.HttpException
 
 object PicsumApiService {
     const val LIMIT = 30
@@ -10,14 +9,20 @@ object PicsumApiService {
     }
 
     suspend fun fetchContents(page: Int, limit: Int = LIMIT): List<Picsum> {
-        return retrofitService.fetchContents(page, limit)
+        return runCatching {
+            retrofitService.fetchContents(page, limit)
+        }.fold(
+            onSuccess = { it },
+            onFailure = { emptyList() },
+        )
     }
 
     suspend fun getItem(id: Int): Picsum? {
-        try {
-            return retrofitService.getItem(id)
-        } catch (e: HttpException) {
-            return null
-        }
+        return runCatching {
+            retrofitService.getItem(id)
+        }.fold(
+            onSuccess = { it },
+            onFailure = { null },
+        )
     }
 }

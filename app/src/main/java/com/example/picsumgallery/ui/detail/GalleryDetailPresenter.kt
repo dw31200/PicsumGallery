@@ -6,37 +6,47 @@ import kotlinx.coroutines.launch
 class GalleryDetailPresenter(
     private val view: GalleryDetailContract.View,
     private val model: GalleryDetailContract.Model,
+    private var galleryId: Int = 0,
 ) : GalleryDetailContract.Presenter {
-    override fun start(galleryId: Int) {
-        view.coroutineScope.launch {
-            val prevItem = model.getItem(galleryId - 1)
-            val currentItem = model.getItem(galleryId)
-            val nextItem = model.getItem(galleryId + 1)
-            view.setItem(prevItem, currentItem, nextItem)
-        }
+    override fun start() {
+        detailLoad(
+            currentItem = { if (it != null) view.showCurrentItem(it) },
+            prevItem = { if (it != null) view.showPrevItem(it) else view.hidePrevItem() },
+            nextItem = { if (it != null) view.showNextItem(it) else view.hideNextItem() },
+        )
     }
 
     override fun onUrlClicked(galleryItem: Picsum) {
         view.showWebSite(galleryItem)
     }
 
-    override fun onPrevButtonClicked(galleryId: Int) {
-        if (galleryId == 0) return
-        view.coroutineScope.launch {
-            val prevItem = model.getItem(galleryId - 2)
-            val currentItem = model.getItem(galleryId - 1)
-            val nextItem = model.getItem(galleryId)
-            view.setItem(prevItem, currentItem, nextItem)
-        }
+    override fun onPrevButtonClicked() {
+        galleryId--
+        detailLoad(
+            currentItem = { if (it != null) view.showCurrentItem(it) },
+            prevItem = { if (it != null) view.showPrevItem(it) else view.hidePrevItem() },
+            nextItem = { if (it != null) view.showNextItem(it) else view.hideNextItem() },
+        )
     }
 
-    override fun onNextButtonClicked(galleryId: Int) {
-        if (galleryId == 1084) return
+    override fun onNextButtonClicked() {
+        galleryId++
+        detailLoad(
+            currentItem = { if (it != null) view.showCurrentItem(it) },
+            prevItem = { if (it != null) view.showPrevItem(it) else view.hidePrevItem() },
+            nextItem = { if (it != null) view.showNextItem(it) else view.hideNextItem() },
+        )
+    }
+
+    private fun detailLoad(
+        currentItem: (Picsum?) -> Unit,
+        prevItem: (Picsum?) -> Unit,
+        nextItem: (Picsum?) -> Unit,
+    ) {
         view.coroutineScope.launch {
-            val prevItem = model.getItem(galleryId)
-            val currentItem = model.getItem(galleryId + 1)
-            val nextItem = model.getItem(galleryId + 2)
-            view.setItem(prevItem, currentItem, nextItem)
+            prevItem(model.getItem(galleryId - 1))
+            currentItem(model.getItem(galleryId))
+            nextItem(model.getItem(galleryId + 1))
         }
     }
 }

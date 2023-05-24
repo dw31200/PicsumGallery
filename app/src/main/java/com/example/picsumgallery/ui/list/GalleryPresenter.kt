@@ -1,5 +1,6 @@
 package com.example.picsumgallery.ui.list
 
+import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.network.PicsumApiService
 import kotlinx.coroutines.launch
 
@@ -12,15 +13,8 @@ class GalleryPresenter(
     override fun start() {
         view.showProgress()
 
-        view.coroutineScope.launch {
-            val list = model.fetchContents(page)
+        pageLoading { list ->
             view.setList(list)
-            view.hideProgress()
-            page++
-
-            if (list.size < PicsumApiService.LIMIT) {
-                nextLoading = false
-            }
         }
     }
 
@@ -30,14 +24,18 @@ class GalleryPresenter(
 
     override fun onLoadNextPage() {
         if (!nextLoading) return
-        view.coroutineScope.launch {
-            val list = model.fetchContents(page)
+        pageLoading { list ->
             view.addList(list)
-            page++
+        }
+    }
 
-            if (list.size < PicsumApiService.LIMIT) {
-                nextLoading = false
-            }
+    private fun pageLoading(listLoad: (List<Picsum>) -> Unit) {
+        view.coroutineScope.launch {
+            val list = model.fetchContents(page++)
+            listLoad(list)
+            view.hideProgress()
+
+            nextLoading = list.size >= PicsumApiService.LIMIT
         }
     }
 }
