@@ -1,13 +1,28 @@
 package com.example.picsumgallery.network
 
 import com.example.picsumgallery.data.Picsum
-import retrofit2.http.GET
-import retrofit2.http.Path
 
-interface PicsumApiService {
-    @GET("v2/list")
-    suspend fun fetchContents(): List<Picsum>
+object PicsumApiService {
+    const val LIMIT = 30
+    private val retrofitService: PicsumApi by lazy {
+        Network.retrofit.create(PicsumApi::class.java)
+    }
 
-    @GET("id/{id}/info")
-    suspend fun getItem(@Path("id") id: Int): Picsum
+    suspend fun fetchContents(page: Int, limit: Int = LIMIT): List<Picsum> {
+        return runCatching {
+            retrofitService.fetchContents(page, limit)
+        }.fold(
+            onSuccess = { it },
+            onFailure = { emptyList() },
+        )
+    }
+
+    suspend fun getItem(id: Int): Picsum? {
+        return runCatching {
+            retrofitService.getItem(id)
+        }.fold(
+            onSuccess = { it },
+            onFailure = { null },
+        )
+    }
 }

@@ -1,18 +1,17 @@
 package com.example.picsumgallery.network
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import com.example.picsumgallery.data.Picsum
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
-object PicsumApi {
-    private const val BASE_URL = "https://picsum.photos/"
-    private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-    private val retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .baseUrl(BASE_URL)
-        .build()
-    val retrofitService: PicsumApiService = retrofit.create(PicsumApiService::class.java)
+interface PicsumApi {
+    @GET("v2/list")
+    suspend fun fetchContents(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+    ): List<Picsum>
+
+    @GET("id/{id}/info")
+    suspend fun getItem(@Path("id") id: Int): Picsum
 }
