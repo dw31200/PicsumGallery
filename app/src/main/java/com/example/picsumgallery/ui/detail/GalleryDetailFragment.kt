@@ -7,17 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
-import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
-import kotlinx.coroutines.CoroutineScope
 
-class GalleryDetailFragment : Fragment(), GalleryDetailContract.View {
+class GalleryDetailFragment : Fragment() {
     private var _binding: FragmentGalleryDetailBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var presenter: GalleryDetailContract.Presenter
+    private val viewModel by lazy {
+        GalleryDetailViewModel(GalleryDetailModel())
+    }
 
     // region fragment lifecycle
     override fun onCreateView(
@@ -27,23 +25,25 @@ class GalleryDetailFragment : Fragment(), GalleryDetailContract.View {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentGalleryDetailBinding.inflate(inflater, container, false)
-        val galleryId = arguments?.getInt("image_id") ?: 0
-        presenter = GalleryDetailPresenter(this, GalleryDetailModel(), galleryId)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.start()
+        val galleryId = arguments?.getInt("image_id") ?: 0
+        viewModel.galleryId = galleryId
+        binding.vm = viewModel
+        binding.fragment = this@GalleryDetailFragment
+        binding.lifecycleOwner = this@GalleryDetailFragment
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 
     companion object {
-        const val BUNDLE_ID = "image_id"
+        private const val BUNDLE_ID = "image_id"
         fun args(galleryId: Int): Bundle {
             val args = Bundle().apply {
                 putInt(BUNDLE_ID, galleryId)
@@ -52,69 +52,65 @@ class GalleryDetailFragment : Fragment(), GalleryDetailContract.View {
         }
     }
 
+    fun showWebSite(webSiteUrl: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(webSiteUrl),
+        )
+        startActivity(intent)
+    }
     // endregion
+    /*
     // region GalleryDetailContract.View
     override val coroutineScope: CoroutineScope
         get() = this@GalleryDetailFragment.lifecycleScope
 
-    override fun showCurrentItem(currentItem: Picsum) {
+    override fun setItem(prevItem: Picsum?, currentItem: Picsum?, nextItem: Picsum?) {
         with(binding) {
-            Glide
-                .with(root)
-                .load(currentItem.url)
-                .into(detailImageView)
-            Glide
-                .with(root)
-                .load(currentItem.url)
-                .into(currentImageView)
-            detailAuthorTextView.text = currentItem.author
-            detailWidthTextView.text = currentItem.width.toString()
-            detailHeightTextView.text = currentItem.height.toString()
-            detailWebSiteUrlTextView.text = currentItem.webSiteUrl
-            detailUrlTextView.text = currentItem.url
-            detailWebSiteUrlTextView.setOnClickListener {
-                presenter.onUrlClicked(currentItem)
+            if (currentItem != null) {
+                Glide
+                    .with(root)
+                    .load(currentItem.url)
+                    .into(detailImageView)
+                Glide
+                    .with(root)
+                    .load(currentItem.url)
+                    .into(currentImageView)
+                detailAuthorTextView.text = currentItem.author
+                detailWidthTextView.text = currentItem.width.toString()
+                detailHeightTextView.text = currentItem.height.toString()
+                detailWebSiteUrlTextView.text = currentItem.webSiteUrl
+                detailUrlTextView.text = currentItem.url
+                detailWebSiteUrlTextView.setOnClickListener {
+                    presenter.onUrlClicked(currentItem)
+                }
+                detailUrlTextView.setOnClickListener {}
+                prevButton.setOnClickListener {
+                    presenter.onPrevButtonClicked(currentItem.id)
+                }
+                nextButton.setOnClickListener {
+                    presenter.onNextButtonClicked(currentItem.id)
+                }
             }
-            detailUrlTextView.setOnClickListener {}
-            prevButton.setOnClickListener {
-                presenter.onPrevButtonClicked()
+            if (prevItem != null) {
+                prevImageView.visibility = View.VISIBLE
+                Glide
+                    .with(root)
+                    .load(prevItem.url)
+                    .into(prevImageView)
+            } else {
+                prevImageView.visibility = View.INVISIBLE
             }
-            nextButton.setOnClickListener {
-                presenter.onNextButtonClicked()
+            if (nextItem != null) {
+                nextImageView.visibility = View.VISIBLE
+                Glide
+                    .with(root)
+                    .load(nextItem.url)
+                    .into(nextImageView)
+            } else {
+                nextImageView.visibility = View.INVISIBLE
             }
         }
-    }
-
-    override fun showPrevItem(prevItem: Picsum) {
-        with(binding) {
-            prevImageView.visibility = View.VISIBLE
-            prevButton.isEnabled = true
-            Glide
-                .with(root)
-                .load(prevItem.url)
-                .into(prevImageView)
-        }
-    }
-
-    override fun showNextItem(nextItem: Picsum) {
-        with(binding) {
-            nextImageView.visibility = View.VISIBLE
-            nextButton.isEnabled = true
-            Glide
-                .with(root)
-                .load(nextItem.url)
-                .into(nextImageView)
-        }
-    }
-
-    override fun hidePrevItem() {
-        binding.prevImageView.visibility = View.INVISIBLE
-        binding.prevButton.isEnabled = false
-    }
-
-    override fun hideNextItem() {
-        binding.nextImageView.visibility = View.INVISIBLE
-        binding.nextButton.isEnabled = false
     }
 
     override fun showWebSite(galleryItem: Picsum) {
@@ -125,4 +121,5 @@ class GalleryDetailFragment : Fragment(), GalleryDetailContract.View {
         startActivity(intent)
     }
     // endregion
+     */
 }

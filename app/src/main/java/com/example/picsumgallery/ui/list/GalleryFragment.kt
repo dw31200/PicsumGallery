@@ -7,23 +7,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.R
-import com.example.picsumgallery.data.Picsum
 import com.example.picsumgallery.databinding.FragmentGalleryBinding
 import com.example.picsumgallery.ui.detail.GalleryDetailFragment
 import com.example.picsumgallery.ui.detail.GalleryDetailFragment.Companion.args
 import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
 import com.example.picsumgallery.ui.list.adapter.GalleryItemDecoration
-import kotlinx.coroutines.CoroutineScope
 
-class GalleryFragment : Fragment(), GalleryContract.View {
+class GalleryFragment : Fragment() {
     private var _binding: FragmentGalleryBinding? = null
     private val binding
         get() = _binding!!
-    private lateinit var presenter: GalleryContract.Presenter
+    private val viewModel by lazy {
+        GalleryViewModel(GalleryModel())
+    }
 
     //    region fragment lifecycle
     override fun onCreateView(
@@ -33,7 +32,6 @@ class GalleryFragment : Fragment(), GalleryContract.View {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        presenter = GalleryPresenter(this, GalleryModel())
         return binding.root
     }
 
@@ -42,7 +40,10 @@ class GalleryFragment : Fragment(), GalleryContract.View {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.galleryList.adapter = GalleryAdapter { galleryId -> presenter.onItemClicked(galleryId) }
+        binding.vm = viewModel
+        binding.fragment = this@GalleryFragment
+        binding.lifecycleOwner = this@GalleryFragment
+        binding.galleryList.adapter = GalleryAdapter()
         binding.galleryList.addItemDecoration(GalleryItemDecoration())
         binding.galleryList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -52,12 +53,10 @@ class GalleryFragment : Fragment(), GalleryContract.View {
                 val itemCount = recyclerView.adapter?.itemCount?.minus(1)
 
                 if (lastCompletelyVisibleItemPosition == itemCount) {
-                    presenter.onLoadNextPage()
+                    viewModel.onLoadNextPage()
                 }
             }
         })
-
-        presenter.start()
     }
 
     override fun onDestroyView() {
@@ -65,7 +64,23 @@ class GalleryFragment : Fragment(), GalleryContract.View {
         _binding = null
     }
 
+    fun navigateToDetail(galleryId: Int) {
+        parentFragmentManager.commit {
+            setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out,
+            )
+            add<GalleryDetailFragment>(
+                R.id.fragment_container,
+                args = args(galleryId),
+            )
+            addToBackStack(null)
+        }
+    }
     //    endregion
+    /*
     //    region GalleryContract.View
     override val coroutineScope: CoroutineScope
         get() = this@GalleryFragment.lifecycleScope
@@ -102,4 +117,6 @@ class GalleryFragment : Fragment(), GalleryContract.View {
         binding.progressLoading.visibility = View.GONE
     }
     //    endregion
+
+     */
 }

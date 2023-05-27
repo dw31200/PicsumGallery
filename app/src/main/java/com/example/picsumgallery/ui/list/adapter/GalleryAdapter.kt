@@ -7,8 +7,12 @@ import com.example.picsumgallery.data.Picsum
 
 class GalleryAdapter(
     private val galleryItems: MutableList<Picsum> = mutableListOf(),
-    private val onClick: (Int) -> Unit,
 ) : RecyclerView.Adapter<GalleryHolder>() {
+    interface onItemClickListener {
+        fun onClick(galleryId: Int)
+    }
+
+    var onClick: onItemClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryHolder =
         GalleryHolder(parent)
 
