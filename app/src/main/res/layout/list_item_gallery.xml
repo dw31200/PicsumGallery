@@ -4,12 +4,8 @@
     <data>
 
         <variable
-            name="vm"
-            type="com.example.picsumgallery.ui.list.adapter.GalleryHolderViewModel" />
-
-        <variable
-            name="holder"
-            type="com.example.picsumgallery.ui.list.adapter.GalleryHolder" />
+            name="data"
+            type="com.example.picsumgallery.data.Picsum" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:imageUrl="@{holder.galleryItem.url}"
+            bind:imageUrl="@{data.url}"
             tools:src="@drawable/ic_launcher_foreground" />
 
         <TextView
@@ -41,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gallery_image"
-            android:text="@{holder.galleryItem.author}"
+            android:text="@{data.author}"
             tools:text="author" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

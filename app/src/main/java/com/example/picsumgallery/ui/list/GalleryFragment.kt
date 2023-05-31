@@ -80,43 +80,4 @@ class GalleryFragment : Fragment() {
         }
     }
     //    endregion
-    /*
-    //    region GalleryContract.View
-    override val coroutineScope: CoroutineScope
-        get() = this@GalleryFragment.lifecycleScope
-
-    override fun setList(list: List<Picsum>) {
-        (binding.galleryList.adapter as GalleryAdapter).fetchData(list)
-    }
-
-    override fun addList(list: List<Picsum>) {
-        (binding.galleryList.adapter as GalleryAdapter).addData(list)
-    }
-
-    override fun navigateToDetail(galleryId: Int) {
-        parentFragmentManager.commit {
-            setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out,
-            )
-            add<GalleryDetailFragment>(
-                R.id.fragment_container,
-                args = args(galleryId),
-            )
-            addToBackStack(null)
-        }
-    }
-
-    override fun showProgress() {
-        binding.progressLoading.visibility = View.VISIBLE
-    }
-
-    override fun hideProgress() {
-        binding.progressLoading.visibility = View.GONE
-    }
-    //    endregion
-
-     */
 }

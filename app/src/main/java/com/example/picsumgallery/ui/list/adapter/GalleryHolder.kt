@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.core.view.doOnAttach
 import androidx.core.view.doOnDetach
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.data.Picsum
@@ -15,28 +13,19 @@ import com.example.picsumgallery.databinding.ListItemGalleryBinding
 class GalleryHolder(
     private val binding: ListItemGalleryBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private val viewModel by lazy {
-        GalleryHolderViewModel()
-    }
     private var lifecycleOwner: LifecycleOwner? = null
-    private val _galleryItem = MutableLiveData<Picsum>()
-    val galleryItem: LiveData<Picsum>
-        get() = _galleryItem
 
-    //    todo ViewModel 을 만들고 binding 등 fragment나 Holder binding을 어떻게 가져가나요?
-//    todo bind 함수 불리는 상태를 컨트롤하지 못하겠어요.
-    fun bind(galleryItem: Picsum, onClick: GalleryAdapter.onItemClickListener?) {
-        _galleryItem.value = galleryItem
+    fun bind(galleryItem: Picsum, onClick: GalleryAdapter.OnItemClickListener?) {
         with(binding) {
+            data = galleryItem
             galleryImage.setOnClickListener {
                 onClick?.onClick(galleryItem.id)
             }
+            executePendingBindings()
         }
     }
 
     init {
-        binding.vm = viewModel
-        binding.holder = this@GalleryHolder
         itemView.doOnAttach {
             lifecycleOwner = itemView.findViewTreeLifecycleOwner()
         }

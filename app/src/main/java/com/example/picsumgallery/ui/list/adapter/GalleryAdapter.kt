@@ -8,11 +8,11 @@ import com.example.picsumgallery.data.Picsum
 class GalleryAdapter(
     private val galleryItems: MutableList<Picsum> = mutableListOf(),
 ) : RecyclerView.Adapter<GalleryHolder>() {
-    interface onItemClickListener {
+    interface OnItemClickListener {
         fun onClick(galleryId: Int)
     }
 
-    var onClick: onItemClickListener? = null
+    var onClick: OnItemClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryHolder =
         GalleryHolder(parent)
 
@@ -27,11 +27,5 @@ class GalleryAdapter(
         this.galleryItems.clear()
         this.galleryItems.addAll(galleryItems)
         notifyDataSetChanged()
-    }
-
-    fun addData(galleryItems: List<Picsum>) {
-        val positionStart = this.galleryItems.size
-        this.galleryItems.addAll(galleryItems)
-        notifyItemRangeInserted(positionStart, galleryItems.size)
     }
 }

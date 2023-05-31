@@ -30,7 +30,7 @@ class GalleryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val galleryId = arguments?.getInt("image_id") ?: 0
+        val galleryId = getImageId(arguments)
         viewModel.galleryId = galleryId
         binding.vm = viewModel
         binding.fragment = this@GalleryDetailFragment
@@ -42,6 +42,15 @@ class GalleryDetailFragment : Fragment() {
         _binding = null
     }
 
+    fun showWebSite(webSiteUrl: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(webSiteUrl),
+        )
+        startActivity(intent)
+    }
+
+    // endregion
     companion object {
         private const val BUNDLE_ID = "image_id"
         fun args(galleryId: Int): Bundle {
@@ -50,76 +59,9 @@ class GalleryDetailFragment : Fragment() {
             }
             return args
         }
-    }
 
-    fun showWebSite(webSiteUrl: String) {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(webSiteUrl),
-        )
-        startActivity(intent)
-    }
-    // endregion
-    /*
-    // region GalleryDetailContract.View
-    override val coroutineScope: CoroutineScope
-        get() = this@GalleryDetailFragment.lifecycleScope
-
-    override fun setItem(prevItem: Picsum?, currentItem: Picsum?, nextItem: Picsum?) {
-        with(binding) {
-            if (currentItem != null) {
-                Glide
-                    .with(root)
-                    .load(currentItem.url)
-                    .into(detailImageView)
-                Glide
-                    .with(root)
-                    .load(currentItem.url)
-                    .into(currentImageView)
-                detailAuthorTextView.text = currentItem.author
-                detailWidthTextView.text = currentItem.width.toString()
-                detailHeightTextView.text = currentItem.height.toString()
-                detailWebSiteUrlTextView.text = currentItem.webSiteUrl
-                detailUrlTextView.text = currentItem.url
-                detailWebSiteUrlTextView.setOnClickListener {
-                    presenter.onUrlClicked(currentItem)
-                }
-                detailUrlTextView.setOnClickListener {}
-                prevButton.setOnClickListener {
-                    presenter.onPrevButtonClicked(currentItem.id)
-                }
-                nextButton.setOnClickListener {
-                    presenter.onNextButtonClicked(currentItem.id)
-                }
-            }
-            if (prevItem != null) {
-                prevImageView.visibility = View.VISIBLE
-                Glide
-                    .with(root)
-                    .load(prevItem.url)
-                    .into(prevImageView)
-            } else {
-                prevImageView.visibility = View.INVISIBLE
-            }
-            if (nextItem != null) {
-                nextImageView.visibility = View.VISIBLE
-                Glide
-                    .with(root)
-                    .load(nextItem.url)
-                    .into(nextImageView)
-            } else {
-                nextImageView.visibility = View.INVISIBLE
-            }
+        fun getImageId(args: Bundle?): Int {
+            return args?.getInt(BUNDLE_ID) ?: -1
         }
     }
-
-    override fun showWebSite(galleryItem: Picsum) {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(galleryItem.webSiteUrl),
-        )
-        startActivity(intent)
-    }
-    // endregion
-     */
 }
