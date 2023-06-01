@@ -32,56 +32,71 @@
             app:layout_constraintTop_toTopOf="parent"
             bind:imageUrl="@{vm.currentItem.url}" />
 
-        <TextView
+        <com.example.picsumgallery.ui.widget.LabelTextWidget
             android:id="@+id/detail_author_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{vm.currentItem.author}"
-            app:layout_constraintEnd_toEndOf="@id/detail_imageView"
-            app:layout_constraintStart_toStartOf="@id/detail_imageView"
-            app:layout_constraintTop_toBottomOf="@id/detail_imageView" />
+            android:layout_marginStart="10dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_imageView"
+            bind:label='@{"Author: "}'
+            bind:text="@{vm.currentItem.author}" />
 
-        <TextView
+        <com.example.picsumgallery.ui.widget.LabelTextWidget
             android:id="@+id/detail_width_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="@id/detail_imageView"
-            app:layout_constraintStart_toStartOf="@id/detail_imageView"
+            android:layout_marginStart="10dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_author_textView"
-            bind:integerToString="@{vm.currentItem.width}" />
+            bind:label='@{"Width: "}'
+            bind:text="@{vm.currentItem.width}" />
 
-        <TextView
+        <com.example.picsumgallery.ui.widget.LabelTextWidget
             android:id="@+id/detail_height_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="@id/detail_imageView"
-            app:layout_constraintStart_toStartOf="@id/detail_imageView"
+            android:layout_marginStart="10dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_width_textView"
-            bind:integerToString="@{vm.currentItem.height}" />
+            bind:label='@{"Height: "}'
+            bind:text="@{vm.currentItem.height}" />
 
-        <TextView
+        <com.example.picsumgallery.ui.widget.LabelTextWidget
             android:id="@+id/detail_webSiteUrl_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:onClick="@{() -> fragment.showWebSite(vm.currentItem.webSiteUrl)}"
-            android:text="@{vm.currentItem.webSiteUrl}"
-            app:layout_constraintEnd_toEndOf="@id/detail_imageView"
-            app:layout_constraintStart_toStartOf="@id/detail_imageView"
-            app:layout_constraintTop_toBottomOf="@id/detail_height_textView" />
+            android:layout_marginStart="10dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_height_textView"
+            bind:label='@{"Website: "}'
+            bind:text="@{vm.currentItem.webSiteUrl}" />
 
-        <TextView
+        <com.example.picsumgallery.ui.widget.LabelTextWidget
             android:id="@+id/detail_url_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{vm.currentItem.url}"
-            app:layout_constraintEnd_toEndOf="@id/detail_imageView"
-            app:layout_constraintStart_toStartOf="@id/detail_imageView"
-            app:layout_constraintTop_toBottomOf="@id/detail_webSiteUrl_textView" />
+            android:layout_marginStart="10dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_webSiteUrl_textView"
+            bind:label='@{"Url: "}'
+            bind:text="@{vm.currentItem.url}" />
 
         <ImageView
             android:id="@+id/prev_imageView"
