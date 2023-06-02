@@ -3,6 +3,7 @@ package com.example.picsumgallery.ui.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.picsumgallery.data.Picsum
+import com.example.picsumgallery.data.local.PicsumRepository
 import com.example.picsumgallery.network.PicsumApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +12,7 @@ import kotlinx.coroutines.withContext
 
 class GalleryViewModel(
     private val model: GalleryModel,
+    private val repository: PicsumRepository,
 ) {
     private var page: Int = 1
     private var nextLoading: Boolean = true
@@ -20,10 +22,12 @@ class GalleryViewModel(
     private val _list = MutableLiveData<List<Picsum>>()
     val list: LiveData<List<Picsum>>
         get() = _list
+    val allPicsums: LiveData<List<Picsum>> = repository.allPicsums
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
             val list = model.fetchContents(page++)
+            repository.insert(*list.toTypedArray())
             withContext(Dispatchers.Main) {
                 _list.value = list
                 _isShowProgress.value = false
@@ -39,6 +43,7 @@ class GalleryViewModel(
         if (!nextLoading) return
         CoroutineScope(Dispatchers.IO).launch {
             val list = model.fetchContents(page++)
+            repository.insert(*list.toTypedArray())
             withContext(Dispatchers.Main) {
                 _list.value = (_list.value ?: mutableListOf()) + list
             }
