@@ -1,4 +1,4 @@
-package com.example.picsumgallery.network
+package com.example.picsumgallery.data.remote
 
 import com.example.picsumgallery.BuildConfig
 import com.squareup.moshi.Moshi

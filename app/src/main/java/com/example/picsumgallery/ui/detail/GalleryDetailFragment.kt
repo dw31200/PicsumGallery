@@ -14,7 +14,7 @@ class GalleryDetailFragment : Fragment() {
     private val binding
         get() = _binding!!
     private val viewModel by lazy {
-        GalleryDetailViewModel(GalleryDetailModel())
+        GalleryDetailViewModel(GalleryDetailModel(), getImageId(arguments))
     }
 
     // region fragment lifecycle
@@ -30,8 +30,6 @@ class GalleryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val galleryId = getImageId(arguments)
-        viewModel.galleryId = galleryId
         binding.vm = viewModel
         binding.fragment = this@GalleryDetailFragment
         binding.lifecycleOwner = this@GalleryDetailFragment

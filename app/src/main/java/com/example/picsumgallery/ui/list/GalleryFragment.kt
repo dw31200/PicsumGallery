@@ -9,7 +9,6 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.picsumgallery.PicsumGalleryApplication
 import com.example.picsumgallery.R
 import com.example.picsumgallery.databinding.FragmentGalleryBinding
 import com.example.picsumgallery.ui.detail.GalleryDetailFragment
@@ -22,7 +21,7 @@ class GalleryFragment : Fragment() {
     private val binding
         get() = _binding!!
     private val viewModel by lazy {
-        GalleryViewModel(GalleryModel(), (context?.applicationContext as PicsumGalleryApplication).repository)
+        GalleryViewModel(GalleryModel())
     }
 
     //    region fragment lifecycle

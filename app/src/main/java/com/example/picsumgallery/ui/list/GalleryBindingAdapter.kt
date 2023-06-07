@@ -2,7 +2,7 @@ package com.example.picsumgallery.ui.list
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.picsumgallery.data.Picsum
+import com.example.picsumgallery.data.model.Picsum
 import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
 
 @BindingAdapter("bind:galleryList")
