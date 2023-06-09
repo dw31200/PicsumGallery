@@ -32,14 +32,23 @@
             app:layout_constraintTop_toTopOf="parent"
             bind:imageUrl="@{vm.currentItem.url}" />
 
+        <ImageButton
+            android:id="@+id/detailimage_like_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_favorite_24"
+            android:background="#00000000"
+            app:layout_constraintBottom_toBottomOf="@id/detail_imageView"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <com.example.picsumgallery.ui.widget.LabelTextWidget
             android:id="@+id/detail_author_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_imageView"
             bind:label='@{"Author: "}'
@@ -49,10 +58,10 @@
             android:id="@+id/detail_width_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_author_textView"
             bind:label='@{"Width: "}'
@@ -62,10 +71,10 @@
             android:id="@+id/detail_height_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_width_textView"
             bind:label='@{"Height: "}'
@@ -75,11 +84,11 @@
             android:id="@+id/detail_webSiteUrl_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:onClick="@{() -> fragment.showWebSite(vm.currentItem.webSiteUrl)}"
-            android:layout_marginStart="10dp"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_height_textView"
             bind:label='@{"Website: "}'
@@ -89,10 +98,10 @@
             android:id="@+id/detail_url_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detail_webSiteUrl_textView"
             bind:label='@{"Url: "}'

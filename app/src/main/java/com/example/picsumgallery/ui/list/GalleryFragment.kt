@@ -64,6 +64,7 @@ class GalleryFragment : Fragment() {
         _binding = null
     }
 
+    //    endregion
     fun navigateToDetail(galleryId: Int) {
         parentFragmentManager.commit {
             setCustomAnimations(
@@ -79,5 +80,4 @@ class GalleryFragment : Fragment() {
             addToBackStack(null)
         }
     }
-    //    endregion
 }

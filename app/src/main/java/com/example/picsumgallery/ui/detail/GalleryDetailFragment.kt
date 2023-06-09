@@ -40,14 +40,6 @@ class GalleryDetailFragment : Fragment() {
         _binding = null
     }
 
-    fun showWebSite(webSiteUrl: String) {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(webSiteUrl),
-        )
-        startActivity(intent)
-    }
-
     // endregion
     companion object {
         private const val BUNDLE_ID = "image_id"
@@ -61,5 +53,14 @@ class GalleryDetailFragment : Fragment() {
         fun getImageId(args: Bundle?): Int {
             return args?.getInt(BUNDLE_ID) ?: -1
         }
+    }
+
+    //  todo fragment 를 view에 넣지않고 사용하는 방법을 구현 못하겠어요.
+    fun showWebSite(webSiteUrl: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(webSiteUrl),
+        )
+        startActivity(intent)
     }
 }
