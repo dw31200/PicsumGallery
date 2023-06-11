@@ -14,7 +14,7 @@ class GalleryDetailFragment : Fragment() {
     private val binding
         get() = _binding!!
     private val viewModel by lazy {
-        GalleryDetailViewModel(GalleryDetailModel())
+        GalleryDetailViewModel(GalleryDetailModel(), getImageId(arguments))
     }
 
     // region fragment lifecycle
@@ -30,8 +30,6 @@ class GalleryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val galleryId = getImageId(arguments)
-        viewModel.galleryId = galleryId
         binding.vm = viewModel
         binding.fragment = this@GalleryDetailFragment
         binding.lifecycleOwner = this@GalleryDetailFragment
@@ -40,14 +38,6 @@ class GalleryDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    fun showWebSite(webSiteUrl: String) {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(webSiteUrl),
-        )
-        startActivity(intent)
     }
 
     // endregion
@@ -63,5 +53,14 @@ class GalleryDetailFragment : Fragment() {
         fun getImageId(args: Bundle?): Int {
             return args?.getInt(BUNDLE_ID) ?: -1
         }
+    }
+
+    //  todo fragment 를 view에 넣지않고 사용하는 방법을 구현 못하겠어요.
+    fun showWebSite(webSiteUrl: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(webSiteUrl),
+        )
+        startActivity(intent)
     }
 }

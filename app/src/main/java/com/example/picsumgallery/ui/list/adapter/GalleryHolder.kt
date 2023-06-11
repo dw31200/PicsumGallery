@@ -7,7 +7,7 @@ import androidx.core.view.doOnDetach
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.picsumgallery.data.Picsum
+import com.example.picsumgallery.data.model.Picsum
 import com.example.picsumgallery.databinding.ListItemGalleryBinding
 
 class GalleryHolder(

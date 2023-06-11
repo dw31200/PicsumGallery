@@ -1,6 +1,6 @@
-package com.example.picsumgallery.network
+package com.example.picsumgallery.data.remote
 
-import com.example.picsumgallery.data.Picsum
+import com.example.picsumgallery.data.remote.model.PicsumResponse
 
 object PicsumApiService {
     const val LIMIT = 30
@@ -8,7 +8,7 @@ object PicsumApiService {
         Network.retrofit.create(PicsumApi::class.java)
     }
 
-    suspend fun fetchContents(page: Int, limit: Int = LIMIT): List<Picsum> {
+    suspend fun fetchContents(page: Int, limit: Int = LIMIT): List<PicsumResponse> {
         return runCatching {
             retrofitService.fetchContents(page, limit)
         }.fold(
@@ -17,7 +17,7 @@ object PicsumApiService {
         )
     }
 
-    suspend fun getItem(id: Int): Picsum? {
+    suspend fun getItem(id: Int): PicsumResponse? {
         return runCatching {
             retrofitService.getItem(id)
         }.fold(

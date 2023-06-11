@@ -3,7 +3,7 @@ package com.example.picsumgallery.ui.list.adapter
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.picsumgallery.data.Picsum
+import com.example.picsumgallery.data.model.Picsum
 
 class GalleryAdapter(
     private val galleryItems: MutableList<Picsum> = mutableListOf(),

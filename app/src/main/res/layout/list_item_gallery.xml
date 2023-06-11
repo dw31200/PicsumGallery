@@ -5,7 +5,7 @@
 
         <variable
             name="data"
-            type="com.example.picsumgallery.data.Picsum" />
+            type="com.example.picsumgallery.data.model.Picsum" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,12 +33,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@{data.author}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gallery_image"
-            android:text="@{data.author}"
             tools:text="author" />
+
+        <ImageButton
+            android:id="@+id/image_like_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_favorite_24"
+            android:background="#00000000"
+            app:layout_constraintBottom_toBottomOf="@id/gallery_image"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

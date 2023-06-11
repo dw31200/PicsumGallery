@@ -1,23 +1,33 @@
 package com.example.picsumgallery.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.picsumgallery.data.Picsum
+import androidx.room.Update
+import com.example.picsumgallery.data.local.model.PicsumEntity
 
 @Dao
 interface PicsumDao {
-    @Query("SELECT * FROM picsum")
-    fun getAll(): LiveData<List<Picsum>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(picsumEntity: PicsumEntity)
 
-    @Query("SELECT * FROM picsum WHERE id LIKE :id")
-    fun getItem(id: Int): Picsum
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(picsumEntityList: List<PicsumEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg picsum: Picsum)
+    @Query("SELECT * FROM picsumEntity ORDER BY ID ASC")
+    suspend fun getAll(): List<PicsumEntity>
 
-    @Query("DELETE FROM picsum")
-    suspend fun deleteAll()
+    @Query("SELECT * FROM picsumEntity WHERE id LIKE :id")
+    suspend fun getItem(id: Int): PicsumEntity
+
+    @Query("SELECT * FROM picsumEntity ORDER BY ID ASC LIMIT :limit OFFSET :offset")
+    suspend fun getItem(limit: Int, offset: Int): List<PicsumEntity>
+
+    @Update
+    suspend fun update(picsumEntity: PicsumEntity)
+
+    @Delete
+    suspend fun deleteAll(picsumEntity: PicsumEntity)
 }

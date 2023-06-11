@@ -1,0 +1,48 @@
+package com.example.picsumgallery.data.model
+
+import com.example.picsumgallery.data.local.model.PicsumEntity
+import com.example.picsumgallery.data.remote.model.PicsumResponse
+
+data class Picsum(
+    val id: Int,
+    val author: String,
+    val width: Int,
+    val height: Int,
+    val webSiteUrl: String,
+    val url: String,
+) {
+    companion object {
+        operator fun invoke(picsumResponse: PicsumResponse?): Picsum {
+            return Picsum(
+                id = picsumResponse?.id ?: -1,
+                author = picsumResponse?.author ?: "",
+                width = picsumResponse?.width ?: -1,
+                height = picsumResponse?.height ?: -1,
+                webSiteUrl = picsumResponse?.webSiteUrl ?: "",
+                url = picsumResponse?.url ?: "",
+            )
+        }
+
+        operator fun invoke(picsumEntity: PicsumEntity?): Picsum {
+            return Picsum(
+                id = picsumEntity?.id ?: -1,
+                author = picsumEntity?.author ?: "",
+                width = picsumEntity?.width ?: -1,
+                height = picsumEntity?.height ?: -1,
+                webSiteUrl = picsumEntity?.webSiteUrl ?: "",
+                url = picsumEntity?.url ?: "",
+            )
+        }
+    }
+
+    fun toEntity(): PicsumEntity {
+        return PicsumEntity(
+            id = id,
+            author = author,
+            width = width,
+            height = height,
+            webSiteUrl = webSiteUrl,
+            url = url,
+        )
+    }
+}
