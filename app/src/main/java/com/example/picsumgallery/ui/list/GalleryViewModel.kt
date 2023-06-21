@@ -30,10 +30,12 @@ class GalleryViewModel(
     }
 
     private fun fetchContents() {
-        model.fetchContents(page++)
+        model
+            .fetchContents(page++)
             .onEach {
                 _list.value = (_list.value ?: mutableListOf()) + it
                 nextLoading = it.size >= PicsumApiService.LIMIT
-            }.launchIn(CoroutineScope(Dispatchers.Main))
+            }
+            .launchIn(CoroutineScope(Dispatchers.Main))
     }
 }

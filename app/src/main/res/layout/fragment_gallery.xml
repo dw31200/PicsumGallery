@@ -8,8 +8,8 @@
             type="com.example.picsumgallery.ui.list.GalleryViewModel" />
 
         <variable
-            name="fragment"
-            type="com.example.picsumgallery.ui.list.GalleryFragment" />
+            name="navigation"
+            type="com.example.picsumgallery.ui.list.GalleryNavigation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             bind:galleryList="@{vm.list}"
-            bind:onItemClickListener="@{fragment::navigateToDetail}"
+            bind:onItemClickListener="@{navigation::navigateToDetail}"
             tools:listitem="@layout/list_item_gallery" />
 
         <ProgressBar

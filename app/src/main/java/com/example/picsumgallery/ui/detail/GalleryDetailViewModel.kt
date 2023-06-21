@@ -13,19 +13,19 @@ class GalleryDetailViewModel(
     private val model: GalleryDetailModel,
     private var galleryId: Int,
 ) {
-    private val _prevItem = MutableLiveData<Picsum>()
-    val prevItem: LiveData<Picsum>
+    private val _prevItem = MutableLiveData<Picsum?>()
+    val prevItem: LiveData<Picsum?>
         get() = _prevItem
-    private val _currentItem = MutableLiveData<Picsum>()
-    val currentItem: LiveData<Picsum>
+    private val _currentItem = MutableLiveData<Picsum?>()
+    val currentItem: LiveData<Picsum?>
         get() = _currentItem
-    private val _nextItem = MutableLiveData<Picsum>()
-    val nextItem: LiveData<Picsum>
+    private val _nextItem = MutableLiveData<Picsum?>()
+    val nextItem: LiveData<Picsum?>
         get() = _nextItem
-    val isShowPrevImage: LiveData<Boolean> = _prevItem.map { it.id != -1 }
-    val isShowNextImage: LiveData<Boolean> = _nextItem.map { it.id != -1 }
-    val isEnabledPrevButton: LiveData<Boolean> = _prevItem.map { it.id != -1 }
-    val isEnabledNextButton: LiveData<Boolean> = _nextItem.map { it.id != -1 }
+    val isShowPrevImage: LiveData<Boolean> = _prevItem.map { it != null }
+    val isShowNextImage: LiveData<Boolean> = _nextItem.map { it != null }
+    val isEnabledPrevButton: LiveData<Boolean> = _prevItem.map { it != null }
+    val isEnabledNextButton: LiveData<Boolean> = _nextItem.map { it != null }
 
     init {
         loadDetailView()
@@ -42,17 +42,23 @@ class GalleryDetailViewModel(
     }
 
     private fun loadDetailView() {
-        model.getItem(galleryId - 1)
+        model
+            .getItem(galleryId - 1)
             .onEach {
                 _prevItem.value = it
-            }.launchIn(CoroutineScope(Dispatchers.Main))
-        model.getItem(galleryId)
+            }
+            .launchIn(CoroutineScope(Dispatchers.Main))
+        model
+            .getItem(galleryId)
             .onEach {
                 _currentItem.value = it
-            }.launchIn(CoroutineScope(Dispatchers.Main))
-        model.getItem(galleryId + 1)
+            }
+            .launchIn(CoroutineScope(Dispatchers.Main))
+        model
+            .getItem(galleryId + 1)
             .onEach {
                 _nextItem.value = it
-            }.launchIn(CoroutineScope(Dispatchers.Main))
+            }
+            .launchIn(CoroutineScope(Dispatchers.Main))
     }
 }

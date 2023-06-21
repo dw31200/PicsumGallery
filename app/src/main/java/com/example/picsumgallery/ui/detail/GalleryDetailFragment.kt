@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
 
-class GalleryDetailFragment : Fragment() {
+class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
     private var _binding: FragmentGalleryDetailBinding? = null
     private val binding
         get() = _binding!!
@@ -31,7 +31,8 @@ class GalleryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
-        binding.fragment = this@GalleryDetailFragment
+        // todo xml에서 interface를 넣어줬는데 interface를 상속받은 프레그먼트를 넣는 원리를 이해 못하겠어요.
+        binding.showWebSite = this@GalleryDetailFragment
         binding.lifecycleOwner = this@GalleryDetailFragment
     }
 
@@ -41,6 +42,14 @@ class GalleryDetailFragment : Fragment() {
     }
 
     // endregion
+    override fun showWebSite(webSiteUrl: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(webSiteUrl),
+        )
+        startActivity(intent)
+    }
+
     companion object {
         private const val BUNDLE_ID = "image_id"
         fun args(galleryId: Int): Bundle {
@@ -53,14 +62,5 @@ class GalleryDetailFragment : Fragment() {
         fun getImageId(args: Bundle?): Int {
             return args?.getInt(BUNDLE_ID) ?: -1
         }
-    }
-
-    //  todo fragment 를 view에 넣지않고 사용하는 방법을 구현 못하겠어요.
-    fun showWebSite(webSiteUrl: String) {
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(webSiteUrl),
-        )
-        startActivity(intent)
     }
 }

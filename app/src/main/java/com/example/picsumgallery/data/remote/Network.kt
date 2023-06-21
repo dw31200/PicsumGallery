@@ -13,20 +13,24 @@ object Network {
     private const val CONNECT_TIMEOUT_POLICY = 20L
     private const val BASE_URL = "https://picsum.photos/"
     private val interceptor = HttpLoggingInterceptor().apply {
+//        todo buildConfig 파일을 수정하여 Debug release 모드 설정하는 건가요?
         level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
         } else {
             HttpLoggingInterceptor.Level.NONE
         }
     }
-    private val okHttpClient = OkHttpClient.Builder()
+    private val okHttpClient = OkHttpClient
+        .Builder()
         .connectTimeout(CONNECT_TIMEOUT_POLICY, TimeUnit.SECONDS)
         .addInterceptor(interceptor)
         .build()
-    private val moshi = Moshi.Builder()
+    private val moshi = Moshi
+        .Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
-    val retrofit: Retrofit = Retrofit.Builder()
+    val retrofit: Retrofit = Retrofit
+        .Builder()
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .baseUrl(BASE_URL)

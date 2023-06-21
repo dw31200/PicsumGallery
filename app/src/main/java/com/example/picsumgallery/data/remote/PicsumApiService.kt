@@ -4,6 +4,8 @@ import com.example.picsumgallery.data.remote.model.PicsumResponse
 
 object PicsumApiService {
     const val LIMIT = 30
+
+    //    todo 굳이 지연초기화를 안해도 되는 상황에서는 안하는게 맞나요?
     private val retrofitService: PicsumApi by lazy {
         Network.retrofit.create(PicsumApi::class.java)
     }

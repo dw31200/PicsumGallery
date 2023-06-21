@@ -16,7 +16,7 @@ import com.example.picsumgallery.ui.detail.GalleryDetailFragment.Companion.args
 import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
 import com.example.picsumgallery.ui.list.adapter.GalleryItemDecoration
 
-class GalleryFragment : Fragment() {
+class GalleryFragment : Fragment(), GalleryNavigation {
     private var _binding: FragmentGalleryBinding? = null
     private val binding
         get() = _binding!!
@@ -41,7 +41,7 @@ class GalleryFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
-        binding.fragment = this@GalleryFragment
+        binding.navigation = this@GalleryFragment
         binding.lifecycleOwner = this@GalleryFragment
         binding.galleryList.adapter = GalleryAdapter()
         binding.galleryList.addItemDecoration(GalleryItemDecoration())
@@ -65,7 +65,7 @@ class GalleryFragment : Fragment() {
     }
 
     //    endregion
-    fun navigateToDetail(galleryId: Int) {
+    override fun navigateToDetail(galleryId: Int) {
         parentFragmentManager.commit {
             setCustomAnimations(
                 R.anim.slide_in,
@@ -73,6 +73,7 @@ class GalleryFragment : Fragment() {
                 R.anim.fade_in,
                 R.anim.slide_out,
             )
+//          todo add<GalleryDetailFragment>의 의미 args 가 어떻게 호출되는지 알려주세요.
             add<GalleryDetailFragment>(
                 R.id.fragment_container,
                 args = args(galleryId),
