@@ -7,15 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.picsumgallery.databinding.FragmentGalleryDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
     private var _binding: FragmentGalleryDetailBinding? = null
     private val binding
         get() = _binding!!
-    private val viewModel by lazy {
-        GalleryDetailViewModel(GalleryDetailModel(), getImageId(arguments))
-    }
+    private val viewModel: GalleryDetailViewModel by viewModels()
 
     // region fragment lifecycle
     override fun onCreateView(
@@ -31,7 +32,7 @@ class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
-        // todo xml에서 interface를 넣어줬는데 interface를 상속받은 프레그먼트를 넣는 원리를 이해 못하겠어요.
+        // TODO xml에서 interface를 넣어줬는데 interface를 상속받은 프레그먼트를 넣는 원리를 이해 못하겠어요.
         binding.showWebSite = this@GalleryDetailFragment
         binding.lifecycleOwner = this@GalleryDetailFragment
     }
@@ -59,7 +60,8 @@ class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
             return args
         }
 
-        fun getImageId(args: Bundle?): Int {
+        // TODO fragment의 함수를 provides 하는 방법이 있나요?
+        fun providesGalleryId(args: Bundle?): Int {
             return args?.getInt(BUNDLE_ID) ?: -1
         }
     }

@@ -1,23 +1,27 @@
 package com.example.picsumgallery.ui.detail
 
-import com.example.picsumgallery.data.local.Local
+import com.example.picsumgallery.data.local.PicsumDao
 import com.example.picsumgallery.data.model.Picsum
 import com.example.picsumgallery.data.remote.PicsumApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class GalleryDetailModel {
+class GalleryDetailModel @Inject constructor(
+    private val picsumDao: PicsumDao,
+    private val picsumApiService: PicsumApiService,
+) {
     fun getItem(galleryId: Int): Flow<Picsum?> {
         return flow {
-            val local = Local.getPicsumDao().getItem(galleryId)?.let {
+            val local = picsumDao.getItem(galleryId)?.let {
                 Picsum(it)
             }
             emit(local)
-            val remote = PicsumApiService.getItem(galleryId)?.let {
+            val remote = picsumApiService.getItem(galleryId)?.let {
                 Picsum(it)
             }
             if (remote != null) {
-                Local.getPicsumDao().insert(remote.toEntity())
+                picsumDao.insert(remote.toEntity())
                 emit(remote)
             }
         }
