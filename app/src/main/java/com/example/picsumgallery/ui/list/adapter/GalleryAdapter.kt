@@ -9,6 +9,7 @@ class GalleryAdapter(
     private val galleryItems: MutableList<Picsum> = mutableListOf(),
 ) : RecyclerView.Adapter<GalleryHolder>() {
     interface OnItemClickListener {
+        // TODO GalleryFragment 의 navigationToDetail 가 구현한 함수가 되는게 맞나요? 이름이 다른데 override 되는것 같은데, 원리를 다시 설명 해주세요.
         fun onClick(galleryId: Int)
     }
 

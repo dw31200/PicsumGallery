@@ -11,30 +11,6 @@ data class Picsum(
     val webSiteUrl: String,
     val url: String,
 ) {
-    companion object {
-        operator fun invoke(picsumResponse: PicsumResponse?): Picsum {
-            return Picsum(
-                id = picsumResponse?.id ?: -1,
-                author = picsumResponse?.author ?: "",
-                width = picsumResponse?.width ?: -1,
-                height = picsumResponse?.height ?: -1,
-                webSiteUrl = picsumResponse?.webSiteUrl ?: "",
-                url = picsumResponse?.url ?: "",
-            )
-        }
-
-        operator fun invoke(picsumEntity: PicsumEntity?): Picsum {
-            return Picsum(
-                id = picsumEntity?.id ?: -1,
-                author = picsumEntity?.author ?: "",
-                width = picsumEntity?.width ?: -1,
-                height = picsumEntity?.height ?: -1,
-                webSiteUrl = picsumEntity?.webSiteUrl ?: "",
-                url = picsumEntity?.url ?: "",
-            )
-        }
-    }
-
     fun toEntity(): PicsumEntity {
         return PicsumEntity(
             id = id,
@@ -44,5 +20,29 @@ data class Picsum(
             webSiteUrl = webSiteUrl,
             url = url,
         )
+    }
+
+    companion object {
+        operator fun invoke(picsumResponse: PicsumResponse): Picsum {
+            return Picsum(
+                id = picsumResponse.id,
+                author = picsumResponse.author,
+                width = picsumResponse.width,
+                height = picsumResponse.height,
+                webSiteUrl = picsumResponse.webSiteUrl,
+                url = picsumResponse.url,
+            )
+        }
+
+        operator fun invoke(picsumEntity: PicsumEntity): Picsum {
+            return Picsum(
+                id = picsumEntity.id,
+                author = picsumEntity.author,
+                width = picsumEntity.width,
+                height = picsumEntity.height,
+                webSiteUrl = picsumEntity.webSiteUrl,
+                url = picsumEntity.url,
+            )
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.picsumgallery.R
@@ -15,14 +16,14 @@ import com.example.picsumgallery.ui.detail.GalleryDetailFragment
 import com.example.picsumgallery.ui.detail.GalleryDetailFragment.Companion.args
 import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
 import com.example.picsumgallery.ui.list.adapter.GalleryItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
-class GalleryFragment : Fragment() {
+@AndroidEntryPoint
+class GalleryFragment : Fragment(), GalleryNavigation {
     private var _binding: FragmentGalleryBinding? = null
     private val binding
         get() = _binding!!
-    private val viewModel by lazy {
-        GalleryViewModel(GalleryModel())
-    }
+    private val viewModel: GalleryViewModel by viewModels()
 
     //    region fragment lifecycle
     override fun onCreateView(
@@ -41,7 +42,7 @@ class GalleryFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
-        binding.fragment = this@GalleryFragment
+        binding.navigation = this@GalleryFragment
         binding.lifecycleOwner = this@GalleryFragment
         binding.galleryList.adapter = GalleryAdapter()
         binding.galleryList.addItemDecoration(GalleryItemDecoration())
@@ -65,7 +66,7 @@ class GalleryFragment : Fragment() {
     }
 
     //    endregion
-    fun navigateToDetail(galleryId: Int) {
+    override fun navigateToDetail(galleryId: Int) {
         parentFragmentManager.commit {
             setCustomAnimations(
                 R.anim.slide_in,
@@ -73,6 +74,7 @@ class GalleryFragment : Fragment() {
                 R.anim.fade_in,
                 R.anim.slide_out,
             )
+            // TODO add<GalleryDetailFragment>의 의미 args 가 어떻게 호출되는지 알려주세요.
             add<GalleryDetailFragment>(
                 R.id.fragment_container,
                 args = args(galleryId),
