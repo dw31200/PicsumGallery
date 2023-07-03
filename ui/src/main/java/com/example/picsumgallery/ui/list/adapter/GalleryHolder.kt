@@ -7,16 +7,16 @@ import androidx.core.view.doOnDetach
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.picsumgallery.data.model.Picsum
-import com.example.picsumgallery.databinding.ListItemGalleryBinding
+import com.example.picsumgallery.ui.databinding.ListItemGalleryBinding
 import com.example.picsumgallery.ui.list.GalleryNavigation
+import com.example.picsumgallery.ui.model.PicsumUiModel
 
 class GalleryHolder(
     private val binding: ListItemGalleryBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var lifecycleOwner: LifecycleOwner? = null
 
-    fun bind(galleryItem: com.example.picsumgallery.data.model.Picsum, galleryNavigation: GalleryNavigation?) {
+    fun bind(galleryItem: PicsumUiModel, galleryNavigation: GalleryNavigation?) {
         with(binding) {
             data = galleryItem
             galleryImage.setOnClickListener {

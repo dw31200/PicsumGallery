@@ -2,7 +2,7 @@ package com.example.picsumgallery.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.picsumgallery.databinding.ActivityMainBinding
+import com.example.picsumgallery.ui.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

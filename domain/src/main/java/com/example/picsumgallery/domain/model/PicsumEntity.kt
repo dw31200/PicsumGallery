@@ -1,5 +1,7 @@
 package com.example.picsumgallery.domain.model
 
+import com.example.picsumgallery.data.model.Picsum
+
 data class PicsumEntity(
     val id: Int,
     val author: String,
@@ -7,5 +9,17 @@ data class PicsumEntity(
     val height: Int,
     val webSiteUrl: String,
     val url: String,
-)
-//                TODO 위 질문과 동일합니다.
+) {
+    companion object {
+        operator fun invoke(picsum: Picsum): PicsumEntity {
+            return PicsumEntity(
+                id = picsum.id,
+                author = picsum.author,
+                width = picsum.width,
+                height = picsum.height,
+                webSiteUrl = picsum.webSiteUrl,
+                url = picsum.url,
+            )
+        }
+    }
+}

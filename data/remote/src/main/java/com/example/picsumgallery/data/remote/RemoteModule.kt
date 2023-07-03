@@ -32,7 +32,6 @@ object RemoteModule {
     @Provides
     fun provideInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-//            TODO app 에 있는 BuildConfig를 주입하는 법을 모르겠어요
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
             } else {

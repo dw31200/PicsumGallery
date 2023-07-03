@@ -5,8 +5,9 @@ import com.example.picsumgallery.data.model.Picsum
 import com.example.picsumgallery.data.remote.PicsumApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class PicsumRepositoryImpl(
+class PicsumRepositoryImpl @Inject constructor(
     private val picsumApiService: PicsumApiService,
     private val picsumDao: PicsumDao,
 ) : PicsumRepository {

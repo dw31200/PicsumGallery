@@ -44,6 +44,5 @@ data class Picsum(
                 url = picsumEntity.url,
             )
         }
-        //    TODO Picsum을 Domain PicsumEntity로 변환해서 넣는 방법을 잘 모르겠어요.
     }
 }

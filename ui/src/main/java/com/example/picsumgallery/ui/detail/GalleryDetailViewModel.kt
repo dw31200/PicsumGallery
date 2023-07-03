@@ -8,7 +8,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.picsumgallery.domain.usecase.GetItemUseCase
 import com.example.picsumgallery.ui.detail.GalleryDetailFragment.Companion.BUNDLE_ID
-import com.example.picsumgallery.ui.model.Picsum
+import com.example.picsumgallery.ui.model.PicsumUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,14 +20,14 @@ class GalleryDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private var galleryId: Int = savedStateHandle.get<Int>(BUNDLE_ID) ?: -1
-    private val _prevItem = MutableLiveData<Picsum?>()
-    val prevItem: LiveData<Picsum?>
+    private val _prevItem = MutableLiveData<PicsumUiModel?>()
+    val prevItem: LiveData<PicsumUiModel?>
         get() = _prevItem
-    private val _currentItem = MutableLiveData<Picsum?>()
-    val currentItem: LiveData<Picsum?>
+    private val _currentItem = MutableLiveData<PicsumUiModel?>()
+    val currentItem: LiveData<PicsumUiModel?>
         get() = _currentItem
-    private val _nextItem = MutableLiveData<Picsum?>()
-    val nextItem: LiveData<Picsum?>
+    private val _nextItem = MutableLiveData<PicsumUiModel?>()
+    val nextItem: LiveData<PicsumUiModel?>
         get() = _nextItem
     val isShowPrevImage: LiveData<Boolean> = _prevItem.map { it != null }
     val isShowNextImage: LiveData<Boolean> = _nextItem.map { it != null }
@@ -51,17 +51,17 @@ class GalleryDetailViewModel @Inject constructor(
     private fun loadDetailView() {
         useCase(galleryId - 1)
             .onEach {
-                _prevItem.value = it
+                it?.let { _prevItem.value = PicsumUiModel(it) }
             }
             .launchIn(viewModelScope)
         useCase(galleryId)
             .onEach {
-                _currentItem.value = it
+                it?.let { _currentItem.value = PicsumUiModel(it) }
             }
             .launchIn(viewModelScope)
         useCase(galleryId + 1)
             .onEach {
-                _nextItem.value = it
+                it?.let { _nextItem.value = PicsumUiModel(it) }
             }
             .launchIn(viewModelScope)
     }
