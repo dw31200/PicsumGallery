@@ -29,8 +29,8 @@ data class Picsum(
                 author = picsumResponse.author,
                 width = picsumResponse.width,
                 height = picsumResponse.height,
-                webSiteUrl = picsumResponse.webSiteUrl,
-                url = picsumResponse.url,
+                webSiteUrl = picsumResponse.url,
+                url = picsumResponse.downloadUrl,
             )
         }
 
