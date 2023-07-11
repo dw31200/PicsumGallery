@@ -4,7 +4,7 @@ import com.example.picsumgallery.data.model.Picsum
 import kotlinx.coroutines.flow.Flow
 
 interface PicsumRepository {
-    fun fetchContents(page: Int, limit: Int): Flow<List<Picsum>>
+    fun getItemList(page: Int, limit: Int): Flow<List<Picsum>>
 
     fun getItem(galleryId: Int): Flow<Picsum?>
 }

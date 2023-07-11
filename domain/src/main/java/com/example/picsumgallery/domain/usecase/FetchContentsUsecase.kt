@@ -10,7 +10,7 @@ class FetchContentsUsecase @Inject constructor(
     private val repository: PicsumRepository,
 ) {
     operator fun invoke(page: Int, limit: Int): Flow<List<PicsumEntity>> {
-        return repository.fetchContents(page, limit).map {
+        return repository.getItemList(page, limit).map {
             it.map {
                 PicsumEntity(it)
             }

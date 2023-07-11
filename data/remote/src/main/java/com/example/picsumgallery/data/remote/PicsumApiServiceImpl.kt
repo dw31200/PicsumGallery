@@ -6,9 +6,9 @@ import javax.inject.Inject
 class PicsumApiServiceImpl @Inject constructor(
     private val picsumApi: PicsumApi,
 ) : PicsumApiService {
-    override suspend fun fetchContents(page: Int, limit: Int): List<PicsumResponse> {
+    override suspend fun getItemList(page: Int, limit: Int): List<PicsumResponse> {
         return runCatching {
-            picsumApi.fetchContents(page, limit)
+            picsumApi.getItemList(page, limit)
         }.fold(
             onSuccess = { it },
             onFailure = { emptyList() },

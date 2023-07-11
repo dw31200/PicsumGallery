@@ -11,14 +11,14 @@ class PicsumRepositoryImpl @Inject constructor(
     private val picsumApiService: PicsumApiService,
     private val picsumDao: PicsumDao,
 ) : PicsumRepository {
-    override fun fetchContents(page: Int, limit: Int): Flow<List<Picsum>> {
+    override fun getItemList(page: Int, limit: Int): Flow<List<Picsum>> {
         return flow {
             val offset = (page - 1) * limit
             val local = picsumDao.getItem(limit, offset).map {
                 Picsum(it)
             }
             emit(local)
-            val remote = picsumApiService.fetchContents(page, limit).map {
+            val remote = picsumApiService.getItemList(page, limit).map {
                 Picsum(it)
             }
             picsumDao.insert(remote.map { it.toEntity() })
