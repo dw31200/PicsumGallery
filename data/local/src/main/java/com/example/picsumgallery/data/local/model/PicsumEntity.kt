@@ -10,6 +10,6 @@ data class PicsumEntity(
     val author: String,
     val width: Int,
     val height: Int,
-    val webSiteUrl: String,
     val url: String,
+    val downloadUrl: String,
 )
