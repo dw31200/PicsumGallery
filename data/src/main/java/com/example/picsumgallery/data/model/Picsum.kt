@@ -8,8 +8,8 @@ data class Picsum(
     val author: String,
     val width: Int,
     val height: Int,
-    val webSiteUrl: String,
     val url: String,
+    val downloadUrl: String,
 ) {
     fun toEntity(): PicsumEntity {
         return PicsumEntity(
@@ -17,8 +17,8 @@ data class Picsum(
             author = author,
             width = width,
             height = height,
-            url = webSiteUrl,
-            downloadUrl = url,
+            url = url,
+            downloadUrl = downloadUrl,
         )
     }
 
@@ -29,8 +29,8 @@ data class Picsum(
                 author = picsumResponse.author,
                 width = picsumResponse.width,
                 height = picsumResponse.height,
-                webSiteUrl = picsumResponse.url,
-                url = picsumResponse.downloadUrl,
+                url = picsumResponse.url,
+                downloadUrl = picsumResponse.downloadUrl,
             )
         }
 
@@ -40,8 +40,8 @@ data class Picsum(
                 author = picsumEntity.author,
                 width = picsumEntity.width,
                 height = picsumEntity.height,
-                webSiteUrl = picsumEntity.url,
-                url = picsumEntity.downloadUrl,
+                url = picsumEntity.url,
+                downloadUrl = picsumEntity.downloadUrl,
             )
         }
     }

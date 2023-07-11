@@ -17,8 +17,8 @@ data class PicsumEntity(
                 author = picsum.author,
                 width = picsum.width,
                 height = picsum.height,
-                webSiteUrl = picsum.webSiteUrl,
-                url = picsum.url,
+                webSiteUrl = picsum.url,
+                url = picsum.downloadUrl,
             )
         }
     }
