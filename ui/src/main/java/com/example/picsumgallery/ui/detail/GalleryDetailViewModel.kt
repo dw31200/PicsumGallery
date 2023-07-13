@@ -51,7 +51,7 @@ class GalleryDetailViewModel @Inject constructor(
     private fun loadDetailView() {
         useCase(galleryId - 1)
             .onEach {
-                it?.let { _prevItem.value = PicsumUiModel(it) }
+                it?.let { _prevItem.value = PicsumUiModel(it) } ?: run { _prevItem.value = null }
             }
             .launchIn(viewModelScope)
         useCase(galleryId)
@@ -61,7 +61,7 @@ class GalleryDetailViewModel @Inject constructor(
             .launchIn(viewModelScope)
         useCase(galleryId + 1)
             .onEach {
-                it?.let { _nextItem.value = PicsumUiModel(it) }
+                it?.let { _nextItem.value = PicsumUiModel(it) } ?: run { _nextItem.value = null }
             }
             .launchIn(viewModelScope)
     }
