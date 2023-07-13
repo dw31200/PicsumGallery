@@ -22,10 +22,7 @@ class PicsumRepositoryImpl @Inject constructor(
                 Picsum(it)
             }
             picsumDao.insert(remote.map { it.toEntity() })
-            val remoteInsertLocal = picsumDao.getItem(limit, offset).map {
-                Picsum(it)
-            }
-            emit(remoteInsertLocal)
+            emit(remote)
         }
     }
 
