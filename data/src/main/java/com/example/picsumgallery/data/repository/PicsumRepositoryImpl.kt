@@ -14,7 +14,7 @@ class PicsumRepositoryImpl @Inject constructor(
     override fun getItemList(page: Int, limit: Int): Flow<List<Picsum>> {
         return flow {
             val offset = (page - 1) * limit
-            val local = picsumDao.getItem(limit, offset).map {
+            val local = picsumDao.getItemList(limit, offset).map {
                 Picsum(it)
             }
             emit(local)

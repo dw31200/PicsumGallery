@@ -23,7 +23,7 @@ interface PicsumDao {
     suspend fun getItem(id: Int): PicsumEntity?
 
     @Query("SELECT * FROM picsumEntity ORDER BY ID ASC LIMIT :limit OFFSET :offset")
-    suspend fun getItem(limit: Int, offset: Int): List<PicsumEntity>
+    suspend fun getItemList(limit: Int, offset: Int): List<PicsumEntity>
 
     @Update
     suspend fun update(picsumEntity: PicsumEntity)
