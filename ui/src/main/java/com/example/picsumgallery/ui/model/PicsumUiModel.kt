@@ -7,8 +7,8 @@ data class PicsumUiModel(
     val author: String,
     val width: Int,
     val height: Int,
-    val webSiteUrl: String,
     val url: String,
+    val downloadUrl: String,
 ) {
     companion object {
         operator fun invoke(picsumEntity: PicsumEntity): PicsumUiModel {
@@ -17,8 +17,8 @@ data class PicsumUiModel(
                 author = picsumEntity.author,
                 width = picsumEntity.width,
                 height = picsumEntity.height,
-                webSiteUrl = picsumEntity.webSiteUrl,
                 url = picsumEntity.url,
+                downloadUrl = picsumEntity.downloadUrl,
             )
         }
     }

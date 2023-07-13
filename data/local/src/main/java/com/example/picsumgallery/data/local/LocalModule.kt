@@ -22,6 +22,7 @@ object LocalModule {
             PicsumDatabase::class.java,
             "picsum.db",
         )
+            .addMigrations(MIGRATION_1_2)
             .build()
     }
 

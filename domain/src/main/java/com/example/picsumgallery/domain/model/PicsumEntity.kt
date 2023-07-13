@@ -7,8 +7,8 @@ data class PicsumEntity(
     val author: String,
     val width: Int,
     val height: Int,
-    val webSiteUrl: String,
     val url: String,
+    val downloadUrl: String,
 ) {
     companion object {
         operator fun invoke(picsum: Picsum): PicsumEntity {
@@ -17,8 +17,8 @@ data class PicsumEntity(
                 author = picsum.author,
                 width = picsum.width,
                 height = picsum.height,
-                webSiteUrl = picsum.url,
-                url = picsum.downloadUrl,
+                url = picsum.url,
+                downloadUrl = picsum.downloadUrl,
             )
         }
     }
