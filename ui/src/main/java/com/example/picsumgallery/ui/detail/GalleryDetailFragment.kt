@@ -42,10 +42,10 @@ class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
     }
 
     // endregion
-    override fun showWebSite(webSiteUrl: String) {
+    override fun showWebSite(url: String) {
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse(webSiteUrl),
+            Uri.parse(url),
         )
         startActivity(intent)
     }

@@ -12,10 +12,10 @@ fun TextView.setTextFromInteger(number: Int?) {
 }
 
 @BindingAdapter("bind:imageUrl")
-fun ImageView.setImageUrl(url: String?) {
+fun ImageView.setImageUrl(downloadUrl: String?) {
     Glide
         .with(this)
-        .load(url)
+        .load(downloadUrl)
         .into(this)
 }
 
