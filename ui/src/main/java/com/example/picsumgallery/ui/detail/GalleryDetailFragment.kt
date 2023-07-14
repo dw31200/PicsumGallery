@@ -58,9 +58,5 @@ class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
             }
             return args
         }
-
-        fun providesGalleryId(args: Bundle?): Int {
-            return args?.getInt(BUNDLE_ID) ?: -1
-        }
     }
 }
