@@ -9,7 +9,6 @@ data class PicsumResponse(
     val author: String,
     val width: Int,
     val height: Int,
-    @Json(name = "url")
     val url: String,
     @Json(name = "download_url")
     val downloadUrl: String,
