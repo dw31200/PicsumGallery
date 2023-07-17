@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.example.picsumgallery.domain.usecase.FetchContentsUsecase
+import com.example.picsumgallery.domain.usecase.GetItemListUseCase
 import com.example.picsumgallery.share.Contract
 import com.example.picsumgallery.ui.model.PicsumUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
-    private val useCase: FetchContentsUsecase,
+    private val useCase: GetItemListUseCase,
 ) : ViewModel() {
     private val limit = Contract.LIMIT
     private var page: Int = 1

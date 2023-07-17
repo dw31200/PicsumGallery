@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class FetchContentsUsecase @Inject constructor(
+class GetItemListUseCase @Inject constructor(
     private val repository: PicsumRepository,
 ) {
     operator fun invoke(page: Int, limit: Int): Flow<List<PicsumEntity>> {
