@@ -28,9 +28,30 @@ object LocalModule {
 
     @Singleton
     @Provides
+    fun providePicsumLikeDatabase(
+        @ApplicationContext context: Context,
+    ): PicsumLikeDatabase {
+        return Room.databaseBuilder(
+            context,
+            PicsumLikeDatabase::class.java,
+            "picsumlike.db",
+        )
+            .build()
+    }
+
+    @Singleton
+    @Provides
     fun providePicsumDao(
         database: PicsumDatabase,
     ): PicsumDao {
         return database.picsumDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providePicsumLikeDao(
+        database: PicsumLikeDatabase,
+    ): PicsumLikeDao {
+        return database.picsumLikeDao()
     }
 }
