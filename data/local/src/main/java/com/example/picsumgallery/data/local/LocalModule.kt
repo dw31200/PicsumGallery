@@ -22,20 +22,7 @@ object LocalModule {
             PicsumDatabase::class.java,
             "picsum.db",
         )
-            .addMigrations(MIGRATION_1_2)
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun providePicsumLikeDatabase(
-        @ApplicationContext context: Context,
-    ): PicsumLikeDatabase {
-        return Room.databaseBuilder(
-            context,
-            PicsumLikeDatabase::class.java,
-            "picsumlike.db",
-        )
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
     }
 
@@ -50,7 +37,7 @@ object LocalModule {
     @Singleton
     @Provides
     fun providePicsumLikeDao(
-        database: PicsumLikeDatabase,
+        database: PicsumDatabase,
     ): PicsumLikeDao {
         return database.picsumLikeDao()
     }

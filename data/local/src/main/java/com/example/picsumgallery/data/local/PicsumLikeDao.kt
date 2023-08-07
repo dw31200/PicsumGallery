@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.picsumgallery.data.local.model.PicsumEntity
 import com.example.picsumgallery.data.local.model.PicsumLikeEntity
 
 @Dao
@@ -21,7 +20,7 @@ interface PicsumLikeDao {
     suspend fun getAll(): List<PicsumLikeEntity>
 
     @Query("SELECT * FROM picsumLikeEntity WHERE id = :id")
-    suspend fun getItem(id: Int): PicsumEntity?
+    suspend fun getItem(id: Int): PicsumLikeEntity?
 
     @Query("SELECT * FROM picsumLikeEntity ORDER BY ID ASC LIMIT :limit OFFSET :offset")
     suspend fun getItemList(limit: Int, offset: Int): List<PicsumLikeEntity>
