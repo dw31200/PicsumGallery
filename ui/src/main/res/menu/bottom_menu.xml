@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/galleryFragment"
+        android:title="List"
+        android:icon="@drawable/baseline_apps_24"
+        />
+
+    <item
+        android:id="@+id/likeFragment"
+        android:title="Like"
+        android:icon="@drawable/menu_favorite"
+        />
+
+    <item
+        android:id="@+id/settingFragment"
+        android:title="Setting"
+        android:icon="@drawable/baseline_settings_24"
+        />
+
+</menu>

@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.picsumgallery.domain.usecase.GetItemUseCase
-import com.example.picsumgallery.ui.detail.GalleryDetailFragment.Companion.BUNDLE_ID
 import com.example.picsumgallery.ui.model.PicsumUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -19,7 +18,7 @@ class GalleryDetailViewModel @Inject constructor(
     private val useCase: GetItemUseCase,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private var galleryId: Int = savedStateHandle.get<Int>(BUNDLE_ID) ?: -1
+    private var galleryId: Int = savedStateHandle.get<Int>("galleryId") ?: -1
     private val _prevItem = MutableLiveData<PicsumUiModel?>()
     val prevItem: LiveData<PicsumUiModel?>
         get() = _prevItem

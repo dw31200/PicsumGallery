@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/galleryFragment">
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.picsumgallery.ui.list.GalleryFragment"
+        android:label="GalleryFragment" >
+        <action
+            android:id="@+id/action_galleryFragment_to_galleryDetailFragment"
+            app:destination="@id/galleryDetailFragment">
+            <argument
+                android:name="galleryId"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/galleryDetailFragment"
+        android:name="com.example.picsumgallery.ui.detail.GalleryDetailFragment"
+        android:label="GalleryDetailFragment">
+        <argument
+            android:name="galleryId"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/likeFragment"
+        android:name="com.example.picsumgallery.ui.like.LikeFragment"
+        android:label="fragment_like"
+        tools:layout="@layout/fragment_like" />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.picsumgallery.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>
