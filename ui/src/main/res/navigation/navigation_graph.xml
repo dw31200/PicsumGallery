@@ -32,7 +32,15 @@
         android:id="@+id/likeFragment"
         android:name="com.example.picsumgallery.ui.like.LikeFragment"
         android:label="fragment_like"
-        tools:layout="@layout/fragment_like" />
+        tools:layout="@layout/fragment_like" >
+        <action
+            android:id="@+id/action_likeFragment_to_galleryDetailFragment"
+            app:destination="@id/galleryDetailFragment" >
+            <argument
+                android:name="galleryId"
+                app:argType="integer" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/settingFragment"
