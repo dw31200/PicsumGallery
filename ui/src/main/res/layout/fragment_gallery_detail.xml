@@ -36,10 +36,12 @@
             android:id="@+id/detailimage_like_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_favorite_24"
             android:background="#00000000"
+            android:onClick="@{() -> vm.onLikeButtonClicked()}"
+            android:src="@drawable/baseline_favorite"
             app:layout_constraintBottom_toBottomOf="@id/detail_imageView"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:selected="@{vm.currentItem.isLiked}" />
 
         <com.example.picsumgallery.ui.widget.LabelTextWidget
             android:id="@+id/detail_author_textView"

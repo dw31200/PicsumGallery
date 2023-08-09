@@ -7,15 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.picsumgallery.domain.usecase.GetItemUseCase
+import com.example.picsumgallery.domain.usecase.SetLikeItemUseCase
 import com.example.picsumgallery.ui.model.PicsumUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GalleryDetailViewModel @Inject constructor(
     private val useCase: GetItemUseCase,
+    private val setLikeItemUseCase: SetLikeItemUseCase,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private var galleryId: Int = savedStateHandle.get<Int>("galleryId") ?: -1
@@ -63,5 +66,12 @@ class GalleryDetailViewModel @Inject constructor(
                 it?.let { _nextItem.value = PicsumUiModel(it) } ?: run { _nextItem.value = null }
             }
             .launchIn(viewModelScope)
+    }
+
+    fun onLikeButtonClicked() {
+        viewModelScope.launch {
+            _currentItem.value?.let { setLikeItemUseCase(it.toPicsumEntity()) }
+            loadDetailView()
+        }
     }
 }

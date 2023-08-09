@@ -29,5 +29,5 @@ interface PicsumLikeDao {
     suspend fun update(picsumLikeEntity: PicsumLikeEntity)
 
     @Delete
-    suspend fun deleteAll(picsumLikeEntity: PicsumLikeEntity)
+    suspend fun delete(picsumLikeEntity: PicsumLikeEntity)
 }

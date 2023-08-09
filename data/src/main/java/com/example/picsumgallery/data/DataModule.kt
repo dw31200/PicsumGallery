@@ -1,5 +1,7 @@
 package com.example.picsumgallery.data
 
+import com.example.picsumgallery.data.repository.PicsumLikeRepository
+import com.example.picsumgallery.data.repository.PicsumLikeRepositoryImpl
 import com.example.picsumgallery.data.repository.PicsumRepository
 import com.example.picsumgallery.data.repository.PicsumRepositoryImpl
 import dagger.Binds
@@ -12,4 +14,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataModule {
     @Binds
     abstract fun bindPicsumRepository(picsumRepositoryImpl: PicsumRepositoryImpl): PicsumRepository
+
+    @Binds
+    abstract fun bindPicsumLikeRepository(picsumLikeRepositoryImpl: PicsumLikeRepositoryImpl): PicsumLikeRepository
 }

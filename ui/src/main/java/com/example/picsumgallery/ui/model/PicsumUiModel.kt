@@ -9,7 +9,19 @@ data class PicsumUiModel(
     val height: Int,
     val url: String,
     val downloadUrl: String,
+    val isLiked: Boolean = false,
 ) {
+    fun toPicsumEntity(): PicsumEntity {
+        return PicsumEntity(
+            id = id,
+            author = author,
+            width = width,
+            height = height,
+            url = url,
+            downloadUrl = downloadUrl,
+            isLiked = isLiked,
+        )
+    }
     companion object {
         operator fun invoke(picsumEntity: PicsumEntity): PicsumUiModel {
             return PicsumUiModel(
@@ -19,6 +31,7 @@ data class PicsumUiModel(
                 height = picsumEntity.height,
                 url = picsumEntity.url,
                 downloadUrl = picsumEntity.downloadUrl,
+                isLiked = picsumEntity.isLiked,
             )
         }
     }

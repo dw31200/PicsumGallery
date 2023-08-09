@@ -9,6 +9,7 @@ data class PicsumEntity(
     val height: Int,
     val url: String,
     val downloadUrl: String,
+    val isLiked: Boolean = false,
 ) {
     companion object {
         operator fun invoke(picsum: Picsum): PicsumEntity {
