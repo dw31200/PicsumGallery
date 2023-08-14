@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.picsumgallery.ui.R
 import com.example.picsumgallery.ui.databinding.FragmentGalleryBinding
-import com.example.picsumgallery.ui.detail.GalleryDetailFragment
-import com.example.picsumgallery.ui.detail.GalleryDetailFragment.Companion.args
 import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
 import com.example.picsumgallery.ui.list.adapter.GalleryItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,18 +63,7 @@ class GalleryFragment : Fragment(), GalleryNavigation {
 
     //    endregion
     override fun navigateToDetail(galleryId: Int) {
-        parentFragmentManager.commit {
-            setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out,
-            )
-            add<GalleryDetailFragment>(
-                R.id.fragment_container,
-                args = args(galleryId),
-            )
-            addToBackStack(null)
-        }
+        val action = GalleryFragmentDirections.actionGalleryFragmentToGalleryDetailFragment(galleryId)
+        findNavController().navigate(action)
     }
 }

@@ -44,10 +44,11 @@
             android:id="@+id/image_like_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_favorite_24"
+            android:src="@drawable/baseline_favorite"
             android:background="#00000000"
             app:layout_constraintBottom_toBottomOf="@id/gallery_image"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:selected="@{data.isLiked}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

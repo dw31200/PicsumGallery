@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetItemListUseCase @Inject constructor(
+class GetLikeItemListUseCase @Inject constructor(
     private val picsumRepository: PicsumRepository,
     private val picsumLikeRepository: PicsumLikeRepository,
 ) {
-    operator fun invoke(page: Int, limit: Int): Flow<List<PicsumEntity>> {
-        val itemList = picsumRepository.getItemList(page, limit).map {
+    operator fun invoke(): Flow<List<PicsumEntity>> {
+        val itemList = picsumRepository.getAll().map {
             it.map {
                 PicsumEntity(it)
             }
@@ -23,9 +23,10 @@ class GetItemListUseCase @Inject constructor(
         val likeItemList = flow { emit(picsumLikeRepository.getAll()) }
 
         return combine(itemList, likeItemList) { _itemList, _likeItemList ->
-            _itemList.map { item ->
-                item.copy(isLiked = _likeItemList.contains(PicsumLike(item.id)))
-            }
+            _itemList.filter { _likeItemList.contains(PicsumLike(it.id)) }
+                .map {
+                    it.copy(isLiked = true)
+                }
         }
     }
 }

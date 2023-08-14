@@ -41,4 +41,13 @@ class PicsumRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override fun getAll(): Flow<List<Picsum>> {
+        return flow {
+            val local = picsumDao.getAll().map {
+                Picsum(it)
+            }
+            emit(local)
+        }
+    }
 }

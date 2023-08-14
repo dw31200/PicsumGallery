@@ -7,4 +7,6 @@ interface PicsumRepository {
     fun getItemList(page: Int, limit: Int): Flow<List<Picsum>>
 
     fun getItem(galleryId: Int): Flow<Picsum?>
+
+    fun getAll(): Flow<List<Picsum>>
 }

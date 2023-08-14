@@ -29,7 +29,10 @@ class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
         binding.showWebSite = this@GalleryDetailFragment
@@ -48,15 +51,5 @@ class GalleryDetailFragment : Fragment(), GalleryDetailShowWebSite {
             Uri.parse(url),
         )
         startActivity(intent)
-    }
-
-    companion object {
-        const val BUNDLE_ID = "image_id"
-        fun args(galleryId: Int): Bundle {
-            val args = Bundle().apply {
-                putInt(BUNDLE_ID, galleryId)
-            }
-            return args
-        }
     }
 }

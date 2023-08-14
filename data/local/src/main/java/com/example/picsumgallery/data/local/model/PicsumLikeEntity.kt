@@ -7,10 +7,4 @@ import androidx.room.PrimaryKey
 data class PicsumLikeEntity(
     @PrimaryKey
     val id: Int,
-    val author: String,
-    val width: Int,
-    val height: Int,
-    val url: String,
-    val downloadUrl: String,
-    val like: Boolean,
 )

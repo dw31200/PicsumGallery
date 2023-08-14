@@ -28,3 +28,8 @@ fun View.setVisible(visible: Boolean) {
 fun View.setEnabled(enabled: Boolean) {
     isEnabled = enabled
 }
+
+@BindingAdapter("bind:selected")
+fun View.setSeleted(selected: Boolean) {
+    isSelected = selected
+}
