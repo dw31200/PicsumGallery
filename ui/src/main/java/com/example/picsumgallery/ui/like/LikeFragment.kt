@@ -8,13 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.picsumgallery.ui.databinding.FragmentLikeBinding
-import com.example.picsumgallery.ui.list.GalleryNavigation
-import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
-import com.example.picsumgallery.ui.list.adapter.GalleryItemDecoration
+import com.example.picsumgallery.ui.like.adpater.LikeAdapter
+import com.example.picsumgallery.ui.like.adpater.LikeItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LikeFragment : Fragment(), GalleryNavigation {
+class LikeFragment : Fragment(), LikeNavigation {
     private var _binding: FragmentLikeBinding? = null
     private val binding
         get() = _binding!!
@@ -38,8 +37,8 @@ class LikeFragment : Fragment(), GalleryNavigation {
         binding.vm = viewModel
         binding.lifecycleOwner = this@LikeFragment
         binding.navigation = this@LikeFragment
-        binding.galleryLikeitemList.adapter = GalleryAdapter()
-        binding.galleryLikeitemList.addItemDecoration(GalleryItemDecoration())
+        binding.galleryLikeitemList.adapter = LikeAdapter()
+        binding.galleryLikeitemList.addItemDecoration(LikeItemDecoration())
     }
 
     override fun onDestroyView() {
