@@ -5,6 +5,7 @@ import com.example.picsumgallery.data.model.Picsum
 import com.example.picsumgallery.data.remote.PicsumApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PicsumRepositoryImpl @Inject constructor(
@@ -27,27 +28,18 @@ class PicsumRepositoryImpl @Inject constructor(
     }
 
     override fun getItem(galleryId: Int): Flow<Picsum?> {
-        return flow {
-            val local = picsumDao.getItem(galleryId)?.let {
+        return picsumDao.getItem(galleryId).map {
+            it?.let {
                 Picsum(it)
-            }
-            emit(local)
-            val remote = picsumApiService.getItem(galleryId)?.let {
-                Picsum(it)
-            }
-            if (remote != null) {
-                picsumDao.insert(remote.toEntity())
-                emit(remote)
             }
         }
     }
 
     override fun getAll(): Flow<List<Picsum>> {
-        return flow {
-            val local = picsumDao.getAll().map {
+        return picsumDao.getAll().map {
+            it.map {
                 Picsum(it)
             }
-            emit(local)
         }
     }
 }

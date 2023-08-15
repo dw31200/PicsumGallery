@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.picsumgallery.data.local.model.PicsumEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PicsumDao {
@@ -17,10 +18,10 @@ interface PicsumDao {
     suspend fun insert(picsumEntityList: List<PicsumEntity>)
 
     @Query("SELECT * FROM picsumEntity ORDER BY ID ASC")
-    suspend fun getAll(): List<PicsumEntity>
+    fun getAll(): Flow<List<PicsumEntity>>
 
     @Query("SELECT * FROM picsumEntity WHERE id = :id")
-    suspend fun getItem(id: Int): PicsumEntity?
+    fun getItem(id: Int): Flow<PicsumEntity?>
 
     @Query("SELECT * FROM picsumEntity ORDER BY ID ASC LIMIT :limit OFFSET :offset")
     suspend fun getItemList(limit: Int, offset: Int): List<PicsumEntity>

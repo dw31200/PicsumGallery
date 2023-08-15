@@ -25,17 +25,4 @@ class LikeViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(),
             mutableListOf(),
         )
-
-//    init {
-//        fetchLikeItem()
-//    }
-//
-//    private fun fetchLikeItem() {
-//        getLikeItemListUseCase()
-//            .map { it.map { PicsumUiModel(it) } }
-//            .onEach {
-//                _likeItemList.value = (_likeItemList.value ?: mutableListOf()) + it
-//            }
-//            .launchIn(viewModelScope)
-//    }
 }
