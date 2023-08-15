@@ -1,13 +1,14 @@
 package com.example.picsumgallery.data.repository
 
 import com.example.picsumgallery.data.model.PicsumLike
+import kotlinx.coroutines.flow.Flow
 
 interface PicsumLikeRepository {
     suspend fun likeItem(galleryId: Int)
 
     suspend fun unlikeItem(galleryId: Int)
 
-    suspend fun getAll(): List<PicsumLike>
+    fun getAll(): Flow<List<PicsumLike>>
 
-    suspend fun getItem(galleryId: Int): PicsumLike?
+    fun getItem(galleryId: Int): Flow<PicsumLike?>
 }

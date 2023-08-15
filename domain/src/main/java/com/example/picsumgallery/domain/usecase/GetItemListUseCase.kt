@@ -6,7 +6,6 @@ import com.example.picsumgallery.data.repository.PicsumRepository
 import com.example.picsumgallery.domain.model.PicsumEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -20,7 +19,7 @@ class GetItemListUseCase @Inject constructor(
                 PicsumEntity(it)
             }
         }
-        val likeItemList = flow { emit(picsumLikeRepository.getAll()) }
+        val likeItemList = picsumLikeRepository.getAll()
 
         return combine(itemList, likeItemList) { _itemList, _likeItemList ->
             _itemList.map { item ->
