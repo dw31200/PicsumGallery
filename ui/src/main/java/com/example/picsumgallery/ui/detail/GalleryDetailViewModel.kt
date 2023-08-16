@@ -1,77 +1,74 @@
 package com.example.picsumgallery.ui.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.picsumgallery.domain.usecase.GetItemUseCase
 import com.example.picsumgallery.domain.usecase.SetLikeItemUseCase
 import com.example.picsumgallery.ui.model.PicsumUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
+@OptIn(ExperimentalCoroutinesApi::class)
 class GalleryDetailViewModel @Inject constructor(
-    private val useCase: GetItemUseCase,
+    private val getItemUseCase: GetItemUseCase,
     private val setLikeItemUseCase: SetLikeItemUseCase,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private var galleryId: Int = savedStateHandle.get<Int>("galleryId") ?: -1
-    private val _prevItem = MutableLiveData<PicsumUiModel?>()
-    val prevItem: LiveData<PicsumUiModel?>
-        get() = _prevItem
-    private val _currentItem = MutableLiveData<PicsumUiModel?>()
-    val currentItem: LiveData<PicsumUiModel?>
-        get() = _currentItem
-    private val _nextItem = MutableLiveData<PicsumUiModel?>()
-    val nextItem: LiveData<PicsumUiModel?>
-        get() = _nextItem
-    val isShowPrevImage: LiveData<Boolean> = _prevItem.map { it != null }
-    val isShowNextImage: LiveData<Boolean> = _nextItem.map { it != null }
-    val isEnabledPrevButton: LiveData<Boolean> = _prevItem.map { it != null }
-    val isEnabledNextButton: LiveData<Boolean> = _nextItem.map { it != null }
-
-    init {
-        loadDetailView()
-    }
+    private var galleryId = savedStateHandle.getStateFlow("galleryId", -1)
+    val prevItem: StateFlow<PicsumUiModel?> =
+        savedStateHandle.getStateFlow<Int>("galleryId", -1)
+            .flatMapLatest { galleryId ->
+                getItemUseCase(galleryId - 1)
+            }.map {
+                it?.let { PicsumUiModel(it) }
+            }.stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(),
+                null,
+            )
+    val currentItem: StateFlow<PicsumUiModel?> =
+        savedStateHandle.getStateFlow<Int>("galleryId", -1)
+            .flatMapLatest { galleryId ->
+                getItemUseCase(galleryId)
+            }.map {
+                it?.let { PicsumUiModel(it) }
+            }.stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(),
+                null,
+            )
+    val nextItem: StateFlow<PicsumUiModel?> =
+        savedStateHandle.getStateFlow<Int>("galleryId", -1)
+            .flatMapLatest { galleryId ->
+                getItemUseCase(galleryId + 1)
+            }.map {
+                it?.let { PicsumUiModel(it) }
+            }.stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(),
+                null,
+            )
 
     fun onPrevButtonClicked() {
-        galleryId--
-        loadDetailView()
+        savedStateHandle["galleryId"] = galleryId.value - 1
     }
 
     fun onNextButtonClicked() {
-        galleryId++
-        loadDetailView()
-    }
-
-    private fun loadDetailView() {
-        useCase(galleryId - 1)
-            .onEach {
-                it?.let { _prevItem.value = PicsumUiModel(it) } ?: run { _prevItem.value = null }
-            }
-            .launchIn(viewModelScope)
-        useCase(galleryId)
-            .onEach {
-                it?.let { _currentItem.value = PicsumUiModel(it) }
-            }
-            .launchIn(viewModelScope)
-        useCase(galleryId + 1)
-            .onEach {
-                it?.let { _nextItem.value = PicsumUiModel(it) } ?: run { _nextItem.value = null }
-            }
-            .launchIn(viewModelScope)
+        savedStateHandle["galleryId"] = galleryId.value + 1
     }
 
     fun onLikeButtonClicked() {
         viewModelScope.launch {
-            _currentItem.value?.let { setLikeItemUseCase(it.toPicsumEntity()) }
-            loadDetailView()
+            currentItem.value?.let { setLikeItemUseCase(it.toPicsumEntity()) }
         }
     }
 }
