@@ -5,10 +5,10 @@ import com.example.picsumgallery.ui.R
 import com.google.android.material.button.MaterialButtonToggleGroup
 
 @BindingAdapter("bind:checkedButton")
-fun MaterialButtonToggleGroup.setCheckedButton(theme: SettingViewModel.Theme) {
+fun MaterialButtonToggleGroup.setCheckedButton(theme: Int) {
     when (theme) {
-        SettingViewModel.Theme.SYSTEM -> check(R.id.system_mode_button)
-        SettingViewModel.Theme.LIGHT -> check(R.id.light_mode_button)
-        SettingViewModel.Theme.DARK -> check(R.id.dark_mode_button)
+        0 -> check(R.id.system_mode_button)
+        1 -> check(R.id.light_mode_button)
+        2 -> check(R.id.dark_mode_button)
     }
 }

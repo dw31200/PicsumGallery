@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.picsumgallery.ui.databinding.FragmentSettingBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding
@@ -27,6 +31,15 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
+        binding.systemButton.setOnClickListener {
+            lifecycleScope.launch { viewModel.setTheme(0) }
+        }
+        binding.lightButton.setOnClickListener {
+            lifecycleScope.launch { viewModel.setTheme(1) }
+        }
+        binding.darkButton.setOnClickListener {
+            lifecycleScope.launch { viewModel.setTheme(2) }
+        }
     }
 
     override fun onDestroyView() {

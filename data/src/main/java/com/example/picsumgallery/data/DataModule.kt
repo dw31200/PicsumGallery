@@ -6,6 +6,8 @@ import com.example.picsumgallery.data.repository.PicsumLikeRepository
 import com.example.picsumgallery.data.repository.PicsumLikeRepositoryImpl
 import com.example.picsumgallery.data.repository.PicsumRepository
 import com.example.picsumgallery.data.repository.PicsumRepositoryImpl
+import com.example.picsumgallery.data.repository.SystemSettingsRepository
+import com.example.picsumgallery.data.repository.SystemSettingsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +24,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindGalleryListPagingSourceFactory(galleryListPagingSourceFactoryImpl: GalleryListPagingSourceFactoryImpl): GalleryListPagingSourceFactory
+
+    @Binds
+    abstract fun bindSystemSettingsRepository(systemSettingsRepositoryImpl: SystemSettingsRepositoryImpl): SystemSettingsRepository
 }

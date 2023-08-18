@@ -53,6 +53,29 @@
                 android:text="dark" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
+        <Button
+            android:id="@+id/system_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/setting_toggle_group"
+            app:layout_constraintTop_toBottomOf="@id/setting_toggle_group"
+            android:text="system"/>
+
+        <Button
+            android:id="@+id/light_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/system_button"
+            app:layout_constraintTop_toBottomOf="@id/setting_toggle_group"
+            android:text="system"/>
+
+        <Button
+            android:id="@+id/dark_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/light_button"
+            app:layout_constraintTop_toBottomOf="@id/setting_toggle_group"
+            android:text="system"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
