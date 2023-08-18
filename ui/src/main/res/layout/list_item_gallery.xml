@@ -50,5 +50,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             bind:selected="@{data.isLiked}"/>
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

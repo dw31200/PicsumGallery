@@ -1,28 +1,28 @@
 package com.example.picsumgallery.ui.list.adapter
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.example.picsumgallery.ui.list.GalleryNavigation
 import com.example.picsumgallery.ui.model.PicsumUiModel
 
-class GalleryAdapter(
-    private val galleryItems: MutableList<PicsumUiModel> = mutableListOf(),
-) : RecyclerView.Adapter<GalleryHolder>() {
+class GalleryAdapter : PagingDataAdapter<PicsumUiModel, GalleryHolder>(GalleryDiffUtil) {
     var galleryNavigation: GalleryNavigation? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryHolder =
         GalleryHolder(parent)
 
     override fun onBindViewHolder(holder: GalleryHolder, position: Int) {
-        holder.bind(galleryItems[position], galleryNavigation)
+        holder.bind(getItem(position), galleryNavigation)
     }
 
-    override fun getItemCount(): Int = galleryItems.size
+    object GalleryDiffUtil : DiffUtil.ItemCallback<PicsumUiModel>() {
+        override fun areItemsTheSame(oldItem: PicsumUiModel, newItem: PicsumUiModel): Boolean {
+            // Id is unique.
+            return oldItem.id == newItem.id
+        }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun fetchData(galleryItems: List<PicsumUiModel>) {
-        this.galleryItems.clear()
-        this.galleryItems.addAll(galleryItems)
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: PicsumUiModel, newItem: PicsumUiModel): Boolean {
+            return oldItem == newItem
+        }
     }
 }

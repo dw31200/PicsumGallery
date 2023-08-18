@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.LoadState
 import com.example.picsumgallery.ui.databinding.FragmentGalleryBinding
 import com.example.picsumgallery.ui.list.adapter.GalleryAdapter
 import com.example.picsumgallery.ui.list.adapter.GalleryItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GalleryFragment : Fragment(), GalleryNavigation {
@@ -40,20 +43,14 @@ class GalleryFragment : Fragment(), GalleryNavigation {
         binding.vm = viewModel
         binding.navigation = this@GalleryFragment
         binding.lifecycleOwner = this@GalleryFragment
-        binding.galleryList.adapter = GalleryAdapter()
-        binding.galleryList.addItemDecoration(GalleryItemDecoration())
-        binding.galleryList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager
-                val lastCompletelyVisibleItemPosition = (layoutManager as? GridLayoutManager)?.findLastCompletelyVisibleItemPosition()
-                val itemCount = recyclerView.adapter?.itemCount?.minus(1)
-
-                if (lastCompletelyVisibleItemPosition == itemCount) {
-                    viewModel.onLoadNextPage()
-                }
+        val pagingAdapter = GalleryAdapter()
+        binding.galleryList.adapter = pagingAdapter
+        lifecycleScope.launch {
+            pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                binding.progressLoading.isVisible = loadStates.refresh is LoadState.Loading
             }
-        })
+        }
+        binding.galleryList.addItemDecoration(GalleryItemDecoration())
     }
 
     override fun onDestroyView() {

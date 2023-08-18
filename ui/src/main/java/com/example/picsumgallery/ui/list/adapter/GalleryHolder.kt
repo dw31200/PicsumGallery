@@ -10,11 +10,13 @@ import com.example.picsumgallery.ui.model.PicsumUiModel
 class GalleryHolder(
     private val binding: ListItemGalleryBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(galleryItem: PicsumUiModel, galleryNavigation: GalleryNavigation?) {
+    fun bind(galleryItem: PicsumUiModel?, galleryNavigation: GalleryNavigation?) {
         with(binding) {
             data = galleryItem
             galleryImage.setOnClickListener {
-                galleryNavigation?.navigateToDetail(galleryItem.id)
+                if (galleryItem != null) {
+                    galleryNavigation?.navigateToDetail(galleryItem.id)
+                }
             }
             executePendingBindings()
         }
