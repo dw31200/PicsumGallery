@@ -44,7 +44,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:visible="@{vm.isShowProgress()}"
             tools:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

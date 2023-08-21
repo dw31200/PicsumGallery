@@ -118,7 +118,7 @@
             app:layout_constraintStart_toEndOf="@id/prev_button"
             app:layout_constraintTop_toTopOf="@id/prev_button"
             bind:imageUrl="@{vm.prevItem.downloadUrl}"
-            bind:visible="@{vm.isShowPrevImage}"
+            bind:visible="@{vm.prevItem != null}"
             tools:src="@drawable/ic_launcher_foreground" />
 
         <ImageView
@@ -144,7 +144,7 @@
             app:layout_constraintStart_toEndOf="@id/current_imageView"
             app:layout_constraintTop_toTopOf="@id/current_imageView"
             bind:imageUrl="@{vm.nextItem.downloadUrl}"
-            bind:visible="@{vm.isShowNextImage}"
+            bind:visible="@{vm.nextItem != null}"
             tools:src="@drawable/ic_launcher_foreground" />
 
         <Button
@@ -156,8 +156,8 @@
             android:onClick="@{() -> vm.onPrevButtonClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            bind:enabled="@{vm.isEnabledPrevButton}"
-            bind:visible="@{vm.isShowPrevImage}" />
+            bind:enabled="@{vm.prevItem != null}"
+            bind:visible="@{vm.prevItem != null}" />
 
         <Button
             android:id="@+id/next_button"
@@ -168,8 +168,8 @@
             android:onClick="@{() -> vm.onNextButtonClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            bind:enabled="@{vm.isEnabledNextButton}"
-            bind:visible="@{vm.isShowNextImage}" />
+            bind:enabled="@{vm.nextItem != null}"
+            bind:visible="@{vm.nextItem != null}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

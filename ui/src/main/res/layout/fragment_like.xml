@@ -9,7 +9,7 @@
 
         <variable
             name="navigation"
-            type="com.example.picsumgallery.ui.list.GalleryNavigation" />
+            type="com.example.picsumgallery.ui.like.LikeNavigation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,8 +30,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
-            bind:galleryList="@{vm.likeItemList}"
-            bind:onItemClickListener="@{navigation}"
+            bind:galleryLikeList="@{vm.likeItemList}"
+            bind:onLikeItemClickListener="@{navigation}"
             tools:listitem="@layout/list_item_gallery" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

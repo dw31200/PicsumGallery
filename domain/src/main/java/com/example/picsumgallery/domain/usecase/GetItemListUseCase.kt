@@ -1,30 +1,20 @@
 package com.example.picsumgallery.domain.usecase
 
-import com.example.picsumgallery.data.model.PicsumLike
-import com.example.picsumgallery.data.repository.PicsumLikeRepository
-import com.example.picsumgallery.data.repository.PicsumRepository
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.example.picsumgallery.data.paging.GalleryListPagingSourceFactory
 import com.example.picsumgallery.domain.model.PicsumEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetItemListUseCase @Inject constructor(
-    private val picsumRepository: PicsumRepository,
-    private val picsumLikeRepository: PicsumLikeRepository,
+    private val galleryListPagingSourceFactory: GalleryListPagingSourceFactory,
 ) {
-    operator fun invoke(page: Int, limit: Int): Flow<List<PicsumEntity>> {
-        val itemList = picsumRepository.getItemList(page, limit).map {
-            it.map {
-                PicsumEntity(it)
-            }
-        }
-        val likeItemList = flow { emit(picsumLikeRepository.getAll()) }
-
-        return combine(itemList, likeItemList) { _itemList, _likeItemList ->
-            _itemList.map { item ->
-                item.copy(isLiked = _likeItemList.contains(PicsumLike(item.id)))
+    operator fun invoke(): Flow<PagingData<PicsumEntity>> {
+        return galleryListPagingSourceFactory.getPagingData().flow.map {
+            it.map { picsum ->
+                PicsumEntity(picsum)
             }
         }
     }

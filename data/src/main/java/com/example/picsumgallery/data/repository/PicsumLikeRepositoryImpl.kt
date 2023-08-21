@@ -3,6 +3,8 @@ package com.example.picsumgallery.data.repository
 import com.example.picsumgallery.data.local.PicsumLikeDao
 import com.example.picsumgallery.data.local.model.PicsumLikeEntity
 import com.example.picsumgallery.data.model.PicsumLike
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PicsumLikeRepositoryImpl @Inject constructor(
@@ -16,15 +18,19 @@ class PicsumLikeRepositoryImpl @Inject constructor(
         picsumLikeDao.delete(PicsumLikeEntity(galleryId))
     }
 
-    override suspend fun getAll(): List<PicsumLike> {
+    override fun getAll(): Flow<List<PicsumLike>> {
         return picsumLikeDao.getAll().map {
-            PicsumLike(it)
+            it.map {
+                PicsumLike(it)
+            }
         }
     }
 
-    override suspend fun getItem(galleryId: Int): PicsumLike? {
-        return picsumLikeDao.getItem(galleryId)?.let {
-            PicsumLike(it)
+    override fun getItem(galleryId: Int): Flow<PicsumLike?> {
+        return picsumLikeDao.getItem(galleryId).map {
+            it?.let {
+                PicsumLike(it)
+            }
         }
     }
 }

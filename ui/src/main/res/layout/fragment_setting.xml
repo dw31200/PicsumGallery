@@ -1,47 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".setting.SettingFragment">
+<layout>
+    <data>
 
-    <TextView
-        android:id="@+id/setting_fragment_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Setting Fragment" />
+        <variable
+            name="vm"
+            type="com.example.picsumgallery.ui.setting.SettingViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".setting.SettingFragment">
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/setting_toggle_group"
-        android:layout_marginTop="80dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/setting_fragment_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:singleSelection="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/system_mode_button"
+        <TextView
+            android:id="@+id/setting_fragment_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="system" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Setting Fragment" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/setting_toggle_group"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_fragment_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            bind:checkedButton="@{vm.theme}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/system_mode_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="system" />
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/light_mode_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="light" />
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:id="@+id/dark_mode_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dark" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
         <Button
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/light_mode_button"
+            android:id="@+id/system_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="light" />
+            app:layout_constraintStart_toStartOf="@id/setting_toggle_group"
+            app:layout_constraintTop_toBottomOf="@id/setting_toggle_group"
+            android:text="system"/>
+
         <Button
-            style="?attr/materialButtonOutlinedStyle"
-            android:id="@+id/dark_mode_button"
+            android:id="@+id/light_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dark" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            app:layout_constraintStart_toEndOf="@id/system_button"
+            app:layout_constraintTop_toBottomOf="@id/setting_toggle_group"
+            android:text="system"/>
 
+        <Button
+            android:id="@+id/dark_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/light_button"
+            app:layout_constraintTop_toBottomOf="@id/setting_toggle_group"
+            android:text="system"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
