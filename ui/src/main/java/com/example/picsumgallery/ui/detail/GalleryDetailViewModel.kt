@@ -25,7 +25,7 @@ class GalleryDetailViewModel @Inject constructor(
 ) : ViewModel() {
     private var galleryId = savedStateHandle.getStateFlow("galleryId", -1)
     val prevItem: StateFlow<PicsumUiModel?> =
-        savedStateHandle.getStateFlow<Int>("galleryId", -1)
+        galleryId
             .flatMapLatest { galleryId ->
                 getItemUseCase(galleryId - 1)
             }.map {
@@ -36,7 +36,7 @@ class GalleryDetailViewModel @Inject constructor(
                 null,
             )
     val currentItem: StateFlow<PicsumUiModel?> =
-        savedStateHandle.getStateFlow<Int>("galleryId", -1)
+        galleryId
             .flatMapLatest { galleryId ->
                 getItemUseCase(galleryId)
             }.map {
@@ -47,7 +47,7 @@ class GalleryDetailViewModel @Inject constructor(
                 null,
             )
     val nextItem: StateFlow<PicsumUiModel?> =
-        savedStateHandle.getStateFlow<Int>("galleryId", -1)
+        galleryId
             .flatMapLatest { galleryId ->
                 getItemUseCase(galleryId + 1)
             }.map {
