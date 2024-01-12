@@ -4,14 +4,10 @@ import com.example.picsumgallery.data.repository.SystemSettingsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class SystemSettingsUseCase @Inject constructor(
+class GetSystemSettingsUseCase @Inject constructor(
     private val systemSettingsRepository: SystemSettingsRepository,
 ) {
-    fun getTheme(): Flow<Int> {
+    operator fun invoke(): Flow<Int> {
         return systemSettingsRepository.getTheme()
-    }
-
-    suspend fun setTheme(theme: Int) {
-        systemSettingsRepository.setTheme(theme)
     }
 }
